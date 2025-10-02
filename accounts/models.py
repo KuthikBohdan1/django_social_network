@@ -16,7 +16,7 @@ class CustomUser(AbstractUser):
         ('blocked','Заблокований'),
         ('normal','Нормальний'),
     )
-    status = models.CharField(max_length=20, choices=STATUS_CHOUSES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOUSES, null=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     avatar = models.ImageField(upload_to="avatars/",null=True, blank=True)
     user_nikname = models.CharField(max_length=64, null=False, blank=False)

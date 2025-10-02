@@ -4,13 +4,13 @@ from accounts.models import CustomUser
 
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    biography = models.CharField(max_length=650, null=True, blank=True, default="no bio yet")
+    biography = models.TextField(null=True, blank=True, default="no bio yet")
     avatar = models.ImageField(upload_to="profile/avatar/", null=True, blank=True)
     cover = models.ImageField(upload_to="profile/cover/", null=True, blank=True)
 
 class Post(models.Model):
     ##########################33
-    parent = models.ForeignKey("Post", null=True, blank=True)
+    parent = models.ForeignKey("Post", on_delete=models.CASCADE, null=True, blank=True)
     ####################333333
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')#profile.posts всі пости на профілі
     text = models.CharField(max_length=256)
@@ -25,7 +25,7 @@ class Post_reaction(models.Model):
         ('dislike','👎'),
         ('funny','😂'),
     )
-    reaction = models.CharField(max_length=3, choices=REACTION_CHOICES)
+    reaction = models.CharField(max_length=10, choices=REACTION_CHOICES)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="reactions") # post.reactions.all ніби всі реакції поста
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reactions')# user.reactions.all ніби як всі реакцї юзера
     def __str__(self):
@@ -36,7 +36,7 @@ class Post_reaction(models.Model):
 
 class Comment_Post(models.Model):
     #############################
-    parent = models.ForeignKey("Coment_Post", null=True, blank=True, related_name="replits") ###ніюи як відповіді 
+    parent = models.ForeignKey("Comment_Post", on_delete=models.CASCADE, null=True, blank=True, related_name="replits") ###ніюи як відповіді 
     #########################
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="comments") #user.posts.all
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")# post.comment.all
@@ -44,3 +44,30 @@ class Comment_Post(models.Model):
     media = models.FileField(upload_to="coment_post/", null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
 
+class Group(models.Model):
+    name = models.CharField(max_length=256)
+    description = models.TextField()
+    image_goroup = models.ImageField(upload_to="Group/image_group/", null=True, blank=True)
+
+class Group_users(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_groups")### user.group.all всі групи користувача потім в пенелі з чатами тре буде використовувати
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_users")# на сторінці чату виуодить список користувачів в групі
+
+class Group_message(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    file  = models.FileField(null=True, blank=True, upload_to="Group_message_file/")
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+class Group_Reaction_message(models.Model):
+    REACTION_CHOICES = (
+        ('like','👍'),
+        ('dislike','👎'),
+        ('funny','😂'),
+    )
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    reaction = models.CharField(choices=REACTION_CHOICES)
+    Group_message = models.ForeignKey(Group_message, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = [['user']]
