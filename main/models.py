@@ -7,6 +7,8 @@ class Profile(models.Model):
     biography = models.TextField(null=True, blank=True, default="no bio yet")
     avatar = models.ImageField(upload_to="profile/avatar/", null=True, blank=True)
     cover = models.ImageField(upload_to="profile/cover/", null=True, blank=True)
+    def __str__(self):
+        return self.user.user_nikname
 
 class Post(models.Model):
     ##########################33
@@ -54,6 +56,7 @@ class Group_users(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_users")# на сторінці чату виуодить список користувачів в групі
 
 class Group_message(models.Model):
+    parent = models.ForeignKey("Group_message", on_delete=models.CASCADE, null=True, blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file  = models.FileField(null=True, blank=True, upload_to="Group_message_file/")
