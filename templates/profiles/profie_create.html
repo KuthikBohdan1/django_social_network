@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>створіть та налаштуйте свій профіль</h3>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_div}}
+    <button type="submit" class="btn btn-primary">створити</button>
+</form>
+
+{% endblock content %}
+

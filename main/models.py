@@ -8,7 +8,7 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to="profile/avatar/", null=True, blank=True)
     cover = models.ImageField(upload_to="profile/cover/", null=True, blank=True)
     def __str__(self):
-        return self.user.user_nikname
+        return self.user.username
 
 class Post(models.Model):
     ##########################33

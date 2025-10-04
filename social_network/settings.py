@@ -127,7 +127,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Login configuration
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/profile-create/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 # Default primary key field type
