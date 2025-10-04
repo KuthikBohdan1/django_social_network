@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
@@ -14,9 +15,16 @@ class CustomUser(AbstractUser):
     STATUS_CHOUSES = (
         ('active','Активний'),
         ('blocked','Заблокований'),
-        ('normal','Нормальний'),
+        ('neactive', 'Неактивний')
     )
-    status = models.CharField(max_length=20, choices=STATUS_CHOUSES, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOUSES, default='active')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     avatar = models.ImageField(upload_to="avatars/",null=True, blank=True)
-    user_nikname = models.CharField(max_length=64, null=False, blank=False)
+    username = models.CharField(max_length=150,
+        unique=True,
+        validators=[MinLengthValidator(5)],
+        help_text=(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        error_messages={
+            "unique": ("A user with that username already exists."),})

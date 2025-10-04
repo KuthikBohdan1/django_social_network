@@ -28,6 +28,7 @@ class Post_reaction(models.Model):
         ('like','👍'),
         ('dislike','👎'),
         ('funny','😂'),
+        ('sad','😢'),
     )
     reaction = models.CharField(max_length=10, choices=REACTION_CHOICES)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="reactions") # post.reactions.all ніби всі реакції поста
@@ -78,6 +79,7 @@ class Group_Reaction_message(models.Model):
         ('like','👍'),
         ('dislike','👎'),
         ('funny','😂'),
+        ('sad','😢'),
     )
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     reaction = models.CharField(choices=REACTION_CHOICES)
@@ -87,3 +89,4 @@ class Group_Reaction_message(models.Model):
      
     class Meta:
         unique_together = [['user']]
+
