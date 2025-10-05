@@ -7,7 +7,7 @@ urlpatterns = [
     path('logout/', views.CustmLogoutView.as_view(), name='logout'),
 ]
 
-
+app_name = "accounts"
 
 # urlpatterns = [
 #     path('register/', views.RegisterView.as_view(), name='register'),

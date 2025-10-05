@@ -3,10 +3,11 @@ from accounts.models import CustomUser
 
 
 class Profile(models.Model):
+    # name = models.CharField(max_length=125, null=True, blank=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     biography = models.TextField(null=True, blank=True, default="no bio yet")
-    avatar = models.ImageField(upload_to="profile/avatar/", null=True, blank=True)
-    cover = models.ImageField(upload_to="profile/cover/", null=True, blank=True)
+    avatar = models.ImageField(upload_to="profiles/avatars/")
+    cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
     def __str__(self):
         return self.user.username
 
@@ -17,7 +18,7 @@ class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')#profile.posts всі пости на профілі
     text = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    media = models.FileField(upload_to="posts/media/", null=True, blank=True)
+    media = models.FileField(upload_to="posts/", null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
     like_fast = models.IntegerField(default= 0)
     def __str__(self):
@@ -46,7 +47,7 @@ class Comment_Post(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="comments") #user.posts.all
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")# post.comment.all
     text = models.TextField(null=True, blank=True)
-    media = models.FileField(upload_to="coment_post/", null=True, blank=True)
+    media = models.FileField(upload_to="coment_posts/", null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.text} / {self.author}"
@@ -54,7 +55,7 @@ class Comment_Post(models.Model):
 class Group(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
-    image_goroup = models.ImageField(upload_to="Group/image_group/", null=True, blank=True)
+    image_goroup = models.ImageField(upload_to="groups/image_groups/", null=True, blank=True)
     def __str__(self):
         return f"{self.name}"
     
@@ -68,7 +69,7 @@ class Group_message(models.Model):
     parent = models.ForeignKey("Group_message", on_delete=models.CASCADE, null=True, blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    file  = models.FileField(null=True, blank=True, upload_to="Group_message_file/")
+    file  = models.FileField(null=True, blank=True, upload_to="group_message/")
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     def __str__(self):

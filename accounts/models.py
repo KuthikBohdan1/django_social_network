@@ -17,6 +17,11 @@ class CustomUser(AbstractUser):
         ('blocked','Заблокований'),
         ('neactive', 'Неактивний')
     )
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    email = models.EmailField(unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOUSES, default='active')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
     avatar = models.ImageField(upload_to="avatars/",null=True, blank=True)
@@ -28,3 +33,6 @@ class CustomUser(AbstractUser):
         ),
         error_messages={
             "unique": ("A user with that username already exists."),})
+    
+    def __str__(self):
+        return self.email

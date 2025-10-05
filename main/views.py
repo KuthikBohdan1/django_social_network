@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from .models import Post, Post_reaction, Group, Group_message, Group_Reaction_message, Group_users, Profile
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
@@ -11,6 +12,9 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
     model = Profile
     template_name = "profiles/profie_create.html"
     form_class = ProfileForm
+    
+    def get_success_url(self):
+        return reverse_lazy("main:profile-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -18,12 +22,12 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         if Profile.objects.filter(user = self.request.user).exists(): ##exist перевіряє чи є такий обєкт та повертає true fals
-            return redirect('profile-list')
+            return redirect('main:profile-list')
         form.instance.user = self.request.user
         valid = super().form_valid(form)
         return valid
 
-class ProfileListVIew(LoginRequiredMixin, ListView):
+class ProfileListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = "profiles/profile_list.html"
     context_object_name = "profiles"

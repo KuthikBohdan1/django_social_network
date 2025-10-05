@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import CustomUser
 
 
-class RegisterForm(forms.ModelForm):
+class RegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -12,18 +12,20 @@ class RegisterForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
     class Meta:
         model = CustomUser
-        fields = ['username','first_name','last_name','email','avatar','password']
+        fields = ['username','first_name','last_name','email','avatar']
 
 
-class LoginForm(forms.ModelForm):
+class LoginForm(AuthenticationForm):######якщо стоврюєш кастомну реістрію використовуй та наслідуй від AuthenticationForm щоб перевіряти 
+    #чи залогінений користувач та передавати в реквест get_user без цього працювати не буде та буде  AttributeError at /login/'LoginForm' object has no attribute 'get_user'
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None) 
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
 
-    class Meta:
-        model = CustomUser
-        fields = ['email','password']
+    # class Meta:
+    #     model = CustomUser
+    #     fields = ['email','password']
 
 # class LoginForm(AuthenticationForm):
 #     class Meta:

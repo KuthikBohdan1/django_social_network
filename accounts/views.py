@@ -11,7 +11,7 @@ class CustomRegisterView(CreateView):
     model = CustomUser
     form_class = RegisterForm
     template_name = "custom_accounts/register.html"
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('accounts:login')
 
 class CustomLoginView(LoginView):
     template_name = "custom_accounts/login.html"
@@ -19,7 +19,7 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
 class CustmLogoutView(LogoutView):
-    next_page = reverse_lazy('login')
+    next_page = reverse_lazy('accounts:login')
 
 # class CustomLogoutView(LogoutView):
 #     pass
