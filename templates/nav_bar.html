@@ -6,23 +6,13 @@
     </form>
     {% comment %} <a href="{% url 'accounts:logout' %}">logout</a> {% endcomment %}
 {% else %}
-    {% comment %} <a href="{% url 'accounts:register' %}">register</a>
-    <a href="{% url 'accounts:login' %}">login</a> {% endcomment %}
-
-    {% comment %} <form method="post" action="{% url 'accounts:login' %}">
-        {% csrf_token %}
-        <button type="submit">login</button>
-    </form>
-
-    <form method="post" action="{% url 'accounts:register' %}">
-        {% csrf_token %}
-        <button type="submit">register</button>
-    </form> {% endcomment %}
 
     <a href="{% url 'accounts:login' %}">Login</a>
     <a href="{% url 'accounts:register' %}">Register</a>
-
 {% endif %}
+
+    <a href="{% url 'main:post-create' %}" class="btn btn-primary">створити пост</a>
+    <a href="{% url 'main:profile-list' %}" class="btn btn-primary">мій профіль</a>
 </header>
 
 

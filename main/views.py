@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from .models import Post,Media_Post,Post_reaction, Group, Group_message, Group_Reaction_message, Group_users, Profile
+from .models import Post, MediaPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileForm, PostForm, Media_postForm
+from main.forms import ProfileForm, PostForm
 # Create your views here.
 
 
@@ -44,9 +44,28 @@ class ProfileListView(LoginRequiredMixin, ListView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = "posts/"
+    template_name = "posts/post_create.html"
+    success_url = reverse_lazy("main:post-create")
 
-class Media_postCreateView(LoginRequiredMixin, CreateView):
-    model = Media_Post
-    form_class = Media_postForm
-    template_name = ""
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['MediaPostForm'] = MediaPostForm
+        return context
+    
+    def get_success_url(self):
+        return super().get_success_url()
+    
+    def form_valid(self, form):
+        form.instance.profile = self.request.user.profile
+        post = super().form_valid(form)
+        files = self.request.FILES.getlist('media')
+        
+        for file in files:
+            MediaPost.objects.create(post = self.object, media = file)
+        return post
+    
+
+# class MediaPostCreateView(LoginRequiredMixin, CreateView):
+#     model = MediaPost
+#     form_class = MediaPostForm
+#     template_name = ""

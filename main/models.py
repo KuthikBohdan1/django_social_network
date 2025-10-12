@@ -4,7 +4,7 @@ from accounts.models import CustomUser
 
 class Profile(models.Model):
     # name = models.CharField(max_length=125, null=True, blank=True)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="profile")
     biography = models.TextField(null=True, blank=True, default="no bio yet")
     avatar = models.ImageField(upload_to="profiles/avatars/", null=True, blank=True)
     cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
@@ -25,11 +25,12 @@ class Post(models.Model):
         return f"{self.parent} / {self.text}"
     
 class MediaPost(models.Model):
-    media = models.FieldFile(upload_to="media_posts")
+    media = models.FileField(upload_to="media_posts/")
     date = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='media_posts')## 
-
-
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='media_posts')## post.media_posts.all
+    def __str__(self):
+        return f"{self.post} / {self.media}"
+    
 class PostReaction(models.Model):
     REACTION_CHOICES = (
         ('like','👍'),
@@ -61,7 +62,7 @@ class CommentPost(models.Model):
 class Group(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
-    description = models.TextField()
+    description = models.TextField(default="no description group")
     image_group = models.ImageField(upload_to="groups/image_groups/", null=True, blank=True)
     def __str__(self):
         return f"{self.name}"

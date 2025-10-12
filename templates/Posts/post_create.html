@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    
+    <h2>створення поста</h2>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" id="formFile" name="media" multiple>
+          </div>
+        <button type="submit" class="btn btn-primary">створити</button>
+    </form>
+
 {% endblock content %}

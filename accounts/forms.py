@@ -12,7 +12,7 @@ class RegisterForm(UserCreationForm):
             self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
     class Meta:
         model = CustomUser
-        fields = ['username','first_name','last_name','email','avatar']
+        fields = ['username','first_name','last_name','email']
 
 
 class LoginForm(AuthenticationForm):######якщо стоврюєш кастомну реістрію використовуй та наслідуй від AuthenticationForm щоб перевіряти 
