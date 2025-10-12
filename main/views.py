@@ -44,9 +44,9 @@ class ProfileListView(LoginRequiredMixin, ListView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = 
+    template_name = "posts/"
 
 class Media_postCreateView(LoginRequiredMixin, CreateView):
     model = Media_Post
     form_class = Media_postForm
-    template_name = 
+    template_name = ""

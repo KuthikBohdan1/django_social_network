@@ -24,7 +24,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOUSES, default='active')
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-    avatar = models.ImageField(upload_to="avatars/",null=True, blank=True)
     username = models.CharField(max_length=150,
         unique=True,
         validators=[MinLengthValidator(5), MaxLengthValidator(56)],

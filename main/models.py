@@ -10,11 +10,7 @@ class Profile(models.Model):
     cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
     def __str__(self):
         return self.user.username
-
-class Media_Post(models.Model):
-    media = models.FieldFile(upload_to="media_posts")
-    date = models.DateTimeField(auto_now_add=True)
-
+    
 class Post(models.Model):
     ##########################33
     parent = models.ForeignKey("Post", on_delete=models.CASCADE, null=True, blank=True)
@@ -24,11 +20,17 @@ class Post(models.Model):
     description = models.TextField(null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
     like_fast = models.IntegerField(default= 0)
-    media = models.ForeignKey(Media_Post,on_delete=models.CASCADE)
+    # media = models.ForeignKey(MediaPost,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.parent} / {self.text}"
+    
+class MediaPost(models.Model):
+    media = models.FieldFile(upload_to="media_posts")
+    date = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='media_posts')## 
 
-class Post_reaction(models.Model):
+
+class PostReaction(models.Model):
     REACTION_CHOICES = (
         ('like','👍'),
         ('dislike','👎'),
@@ -44,9 +46,9 @@ class Post_reaction(models.Model):
     class Meta:
         unique_together = [['user', 'post']]
 
-class Comment_Post(models.Model):
+class CommentPost(models.Model):
     #############################
-    parent = models.ForeignKey("Comment_Post", on_delete=models.CASCADE, null=True, blank=True, related_name="replits") ###ніюи як відповіді 
+    parent = models.ForeignKey("CommentPost", on_delete=models.CASCADE, null=True, blank=True, related_name="replits") ###ніюи як відповіді 
     #########################
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="comments") #user.posts.all
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")# post.comment.all
@@ -57,20 +59,21 @@ class Comment_Post(models.Model):
         return f"{self.text} / {self.author}"
 
 class Group(models.Model):
+    creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     description = models.TextField()
-    image_goroup = models.ImageField(upload_to="groups/image_groups/", null=True, blank=True)
+    image_group = models.ImageField(upload_to="groups/image_groups/", null=True, blank=True)
     def __str__(self):
         return f"{self.name}"
     
-class Group_users(models.Model):
+class GroupUser(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_groups")### user.group.all всі групи користувача потім в пенелі з чатами тре буде використовувати
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_users")# на сторінці чату виуодить список користувачів в групі
     def __str__(self):
         return f"{self.user} / {self.group}"
     
-class Group_message(models.Model):
-    parent = models.ForeignKey("Group_message", on_delete=models.CASCADE, null=True, blank=True)
+class GroupMessage(models.Model):
+    parent = models.ForeignKey("GroupMessage", on_delete=models.CASCADE, null=True, blank=True)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file  = models.FileField(null=True, blank=True, upload_to="group_message/")
@@ -79,7 +82,7 @@ class Group_message(models.Model):
     def __str__(self):
         return f"{self.parent} / {self.message}"
 
-class Group_Reaction_message(models.Model):
+class GroupReactionMessage(models.Model):
     REACTION_CHOICES = (
         ('like','👍'),
         ('dislike','👎'),
@@ -88,10 +91,9 @@ class Group_Reaction_message(models.Model):
     )
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     reaction = models.CharField(choices=REACTION_CHOICES)
-    Group_message = models.ForeignKey(Group_message, on_delete=models.CASCADE)
+    Group_message = models.ForeignKey(GroupMessage, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.user} / {self.reaction}"
      
     class Meta:
         unique_together = [['user']]
-
