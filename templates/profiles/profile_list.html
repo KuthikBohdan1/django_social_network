@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 {% load custom_tags %}
-<h2>профіль</h2>
+<h2>ваш профіль</h2>
 {% for profile in profiles %}
 <h2>імя {{ profile.user }}</h2>
 <h2>біографія {{ profile.biography }}</h2>
 
 
 <h3>аватар </h3>
+{% if profile.avatar %}
 <img src="{{profile.avatar.url}}" alt="...">
+{% else %}
+<img src={% static 'img/no-avatar.jpg' %} alt="">
+{% endif %}
+
 {% comment %} <img src="{{profile.cover.url}}" alt="..."> {% endcomment %}
 
 

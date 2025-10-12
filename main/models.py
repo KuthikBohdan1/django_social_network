@@ -6,10 +6,14 @@ class Profile(models.Model):
     # name = models.CharField(max_length=125, null=True, blank=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     biography = models.TextField(null=True, blank=True, default="no bio yet")
-    avatar = models.ImageField(upload_to="profiles/avatars/")
+    avatar = models.ImageField(upload_to="profiles/avatars/", null=True, blank=True)
     cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
     def __str__(self):
         return self.user.username
+
+class Media_Post(models.Model):
+    media = models.FieldFile(upload_to="media_posts")
+    date = models.DateTimeField(auto_now_add=True)
 
 class Post(models.Model):
     ##########################33
@@ -18,9 +22,9 @@ class Post(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')#profile.posts всі пости на профілі
     text = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    media = models.FileField(upload_to="posts/", null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
     like_fast = models.IntegerField(default= 0)
+    media = models.ForeignKey(Media_Post,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.parent} / {self.text}"
 

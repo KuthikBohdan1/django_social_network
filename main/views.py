@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from .models import Post, Post_reaction, Group, Group_message, Group_Reaction_message, Group_users, Profile
+from .models import Post,Media_Post,Post_reaction, Group, Group_message, Group_Reaction_message, Group_users, Profile
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileForm
+from main.forms import ProfileForm, PostForm, Media_postForm
 # Create your views here.
 
 
@@ -24,6 +24,7 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
         if Profile.objects.filter(user = self.request.user).exists(): ##exist перевіряє чи є такий обєкт та повертає true fals
             return redirect('main:profile-list')
         form.instance.user = self.request.user
+
         valid = super().form_valid(form)
         return valid
 
@@ -34,4 +35,18 @@ class ProfileListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         context = super().get_queryset()
+        print(self.request.user)
+        context = Profile.objects.filter(
+            user_id__email = self.request.user
+        )
         return context
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 
+
+class Media_postCreateView(LoginRequiredMixin, CreateView):
+    model = Media_Post
+    form_class = Media_postForm
+    template_name = 

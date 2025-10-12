@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
@@ -27,7 +27,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to="avatars/",null=True, blank=True)
     username = models.CharField(max_length=150,
         unique=True,
-        validators=[MinLengthValidator(5)],
+        validators=[MinLengthValidator(5), MaxLengthValidator(56)],
         help_text=(
             "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
         ),
