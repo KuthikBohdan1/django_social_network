@@ -10,13 +10,60 @@
 
 <h3>аватар </h3>
 {% if profile.avatar %}
-<img src="{{profile.avatar.url}}" alt="...">
+<img src="{{ profile.avatar.url }}" alt="...">
 {% else %}
 <img src={% static 'img/no-avatar.jpg' %} alt="">
 {% endif %}
 
-{% comment %} <img src="{{profile.cover.url}}" alt="..."> {% endcomment %}
+
+{% for post in profile.posts.all %}
+<div class="post">
+  <h4>{{ post.text }}</h4>
+  <p>{{ post.description }}</p>
+  <p>{{ post.profile.author }}</p>
+
+  <h5>Медіафайли:</h5>
+  {% for media in post.media_posts.all %}
+  <div class="col">
+    <div class="card">
+      <img src="{{ media.media.url }}" class="card-img-top" alt="..." style="max-width:200px; max-height:150px;">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">{{ post.text }}</p>
+        <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
+      </div>
+    </div>
+</div>
+  {% empty %}
+    <p>Медіафайлів немає</p>
+  {% endfor %}
+</div>
+{% empty %}
+<p>Постів немає</p>
+{% endfor %}
+
+{% endfor %}
+
+{% comment %} <div class="d-flex flex-wrap justify-content-center gap-4">
+{% for post in post_list %}
+
+    <div class="col">
+      <div class="card">
+        <img src="" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">{{ post.text }}</p>
+          <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
+        </div>
+      </div>
+</div>
 
 
 {% endfor %}
+</div> {% endcomment %}
+
+
+
+
+
 {% endblock content %}

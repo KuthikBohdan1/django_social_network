@@ -33,6 +33,12 @@ class ProfileListView(LoginRequiredMixin, ListView):
     template_name = "profiles/profile_list.html"
     context_object_name = "profiles"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["post"] = Post.objects.filter(profile__user = self.request.user)
+        # context["photo_card"] = MediaPost.objects.filter()
+        return context
+
     def get_queryset(self):
         context = super().get_queryset()
         print(self.request.user)
