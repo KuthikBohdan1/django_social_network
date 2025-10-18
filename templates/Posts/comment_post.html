@@ -2,21 +2,26 @@
 {% block content %}
 {% load static %}
 <a href="{% url 'main:post-detail' pk=id %}"> <p class="btn btn-primary">назад</p> </a>
-<p>comments post</p>
 
+<div class="alert alert-dark" role="alert">
+<div class="row">
+<div class="col-1">
 {% for comment in comments %}
-<p>{{ comment.text }}</p>
+{% if comment.author.profile_r.avatar %} {# це капєц #}
+<img src="{{ comment.author.profile_r.avatar.url }}" class="avatar_comment" alt="">
+{% endif %}</div>
 
-{% comment %} {% for avatar in comment.author.profile_r.all  %}
-<img src="{{ avatar.avatar.url }}" alt="">
-{% endfor %} {% endcomment %}
-
-{% if comment.author.profile_r.avatar %}
-<img src="{{ comment.author.profile_r.avatar.url }}" alt="">
-    
-{% endif %}
+<div class="col-11">
+<h5>{{ comment.text }}</h5>
+</div>
 {% endfor %}
-
+  </div>
+</div>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit"></button>
+</form>
 
 
 

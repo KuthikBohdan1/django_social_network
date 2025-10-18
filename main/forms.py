@@ -24,10 +24,9 @@ class PostForm(forms.ModelForm):
 class CommentPostForm(forms.ModelForm):
     class Meta:
         model = CommentPost
-        fields = ['parent', 'text', 'media']
+        fields = ['parent', 'text']
         
         widgets = {
-            'media': FileField,
             'text': TextInput,
         }
 

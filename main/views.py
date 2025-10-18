@@ -68,7 +68,6 @@ class CommentPostCreateView(LoginRequiredMixin, CreateView):
         context["id"] = self.kwargs.get("post_id")
         return context
     
-    
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
