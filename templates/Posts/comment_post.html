@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
+<a href="{% url 'main:post-detail' pk=id %}"> <p class="btn btn-primary">назад</p> </a>
 <p>comments post</p>
+
+{% for comment in comments %}
+<p>{{ comment.text }}</p>
+
+{% comment %} {% for avatar in comment.author.profile_r.all  %}
+<img src="{{ avatar.avatar.url }}" alt="">
+{% endfor %} {% endcomment %}
+
+{% if comment.author.profile_r.avatar %}
+<img src="{{ comment.author.profile_r.avatar.url }}" alt="">
+    
+{% endif %}
+{% endfor %}
+
+
+
+
 
 {% endblock content %}

@@ -22,9 +22,14 @@ class PostForm(forms.ModelForm):
         }
 
 class CommentPostForm(forms.ModelForm):
-
     class Meta:
-        model = Com
+        model = CommentPost
+        fields = ['parent', 'text', 'media']
+        
+        widgets = {
+            'media': FileField,
+            'text': TextInput,
+        }
 
 # class MediaPostForm(forms.ModelForm):
 #     class Meta:

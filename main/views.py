@@ -4,7 +4,7 @@ from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMess
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileForm, PostForm
+from main.forms import ProfileForm, PostForm, CommentPostForm
 # Create your views here.
 
 
@@ -60,12 +60,15 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 class CommentPostCreateView(LoginRequiredMixin, CreateView):
     model = CommentPost
     template_name = "posts/comment_post.html"
+    form_class = CommentPostForm
 
     def get_context_data(self, **kwargs):
-        context = super(CommentPostCreateView, self).get_context_data(**kwargs)
-        context = Post.objects.filter()
+        context = super().get_context_data(**kwargs)
+        context["comments"] = CommentPost.objects.filter(post_id=self.kwargs.get("post_id"))
+        context["id"] = self.kwargs.get("post_id")
         return context
-
+    
+    
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -89,10 +92,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             MediaPost.objects.create(post = self.object, media = file)
         return post
 
-class MainListView(LoginRequiredMixin, ListView):
-    model = Post
-    template_name = "main_page/houme.html"
-    form_class = 
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):
 #     model = MediaPost

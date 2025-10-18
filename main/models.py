@@ -4,7 +4,7 @@ from accounts.models import CustomUser
 
 class Profile(models.Model):
     # name = models.CharField(max_length=125, null=True, blank=True)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="profile_r")
     biography = models.TextField(null=True, blank=True, default="no bio yet")
     avatar = models.ImageField(upload_to="profiles/avatars/", null=True, blank=True)
     cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
@@ -52,7 +52,7 @@ class CommentPost(models.Model):
     #########################
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name="comments") #user.posts.all
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")# post.comment.all
-    text = models.TextField(null=True, blank=True)
+    text = models.TextField()
     media = models.FileField(upload_to="coment_posts/", null=True, blank=True)
     date_publish = models.DateTimeField(auto_now_add=True)
     def __str__(self):
