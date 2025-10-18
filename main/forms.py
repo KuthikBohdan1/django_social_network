@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, MediaPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
+from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
 from django.forms import ModelForm, TextInput, Textarea, DateTimeInput, DateInput, ImageField, FileField, ClearableFileInput
 from main.models import Profile
 
@@ -20,6 +20,11 @@ class PostForm(forms.ModelForm):
         fields = ['parent','description']
         widgets = {
         }
+
+class CommentPostForm(forms.ModelForm):
+
+    class Meta:
+        model = Com
 
 # class MediaPostForm(forms.ModelForm):
 #     class Meta:

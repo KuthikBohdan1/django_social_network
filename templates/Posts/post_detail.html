@@ -12,10 +12,6 @@
       <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
     </div>
 
-
-
-    {% for media in post.media_posts.all %}
-        
         <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -24,10 +20,11 @@
         </div>
         <div class="carousel-inner">
 
+    {% for media in post.media_posts.all %}
           <div class="carousel-item active">
-             <img src="{{ media.media }}" class="d-block w-100" alt="...">
+             <img src="{{ media.media.url }}" class="d-block w-100" alt="...">
           </div>
-
+    {% endfor %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -38,14 +35,12 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    {% endfor %}
-
 {% comment %} 
     <a href="{% url 'main:post-detail' pk=post.id %}"> <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
   </a> {% endcomment %}
-  
-    {% endif %}
-  
+
   </div>
 
+  
+<a href="{% url 'main:comment-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a>
 {% endblock content %}

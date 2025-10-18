@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from .models import Post, MediaPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
+from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,9 +52,19 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = "posts/post_detail.html"
     context_object_name = "post"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ClassName, self).get_context_data(**kwargs)
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context["post_id"] = self.kwargs["pk"]
+        return context
+
+class CommentPostCreateView(LoginRequiredMixin, CreateView):
+    model = CommentPost
+    template_name = "posts/comment_post.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentPostCreateView, self).get_context_data(**kwargs)
+        context = Post.objects.filter()
+        return context
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -82,6 +92,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class MainListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "main_page/houme.html"
+    form_class = 
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):
 #     model = MediaPost
