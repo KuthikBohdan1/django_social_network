@@ -17,7 +17,7 @@ class PostForm(forms.ModelForm):
     # media = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)
     class Meta:
         model = Post
-        fields = ['parent','text','description']
+        fields = ['parent','description']
         widgets = {
         }
 

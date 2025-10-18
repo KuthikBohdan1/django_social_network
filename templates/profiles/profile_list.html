@@ -15,32 +15,26 @@
 <img src={% static 'img/no-avatar.jpg' %} alt="">
 {% endif %}
 
-
+<div class="post-list">
 {% for post in profile.posts.all %}
-<div class="post">
-  <h4>{{ post.text }}</h4>
-  <p>{{ post.description }}</p>
-  <p>{{ post.profile.author }}</p>
 
-  <h5>Медіафайли:</h5>
-  {% for media in post.media_posts.all %}
-  <div class="col">
-    <div class="card">
-      <img src="{{ media.media.url }}" class="card-img-top" alt="..." style="max-width:200px; max-height:150px;">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">{{ post.text }}</p>
-        <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
-      </div>
-    </div>
+<div class="card overflow-hidden" style="width: 300px; height: 300px;">
+  <div class="card-body">
+    {% comment %} <h5 class="card-title">{{ post.profile.author }}</h5>
+    <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p> {% endcomment %}
+  </div>
+  {% if post.media_posts.all %}
+  <a href="{% url 'main:post-detail' pk=post.id %}"> <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
+</a>
+
+  {% endif %}
+
 </div>
-  {% empty %}
-    <p>Медіафайлів немає</p>
-  {% endfor %}
-</div>
+
 {% empty %}
 <p>Постів немає</p>
 {% endfor %}
+</div>
 
 {% endfor %}
 

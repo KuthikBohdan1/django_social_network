@@ -47,6 +47,15 @@ class ProfileListView(LoginRequiredMixin, ListView):
         )
         return context
 
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = "posts/post_detail.html"
+    context_object_name = "post"
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(ClassName, self).get_context_data(**kwargs)
+    #     return context
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -65,11 +74,14 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         form.instance.profile = self.request.user.profile
         post = super().form_valid(form)
         files = self.request.FILES.getlist('media')
-        
+    
         for file in files:
             MediaPost.objects.create(post = self.object, media = file)
         return post
-    
+
+class MainListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = "main_page/houme.html"
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):
 #     model = MediaPost

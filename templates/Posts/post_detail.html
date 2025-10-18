@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>post detail</h2>
+
+
+
+<div class="card overflow-hidden" style="max-width: 700px; max-height: 700px;">
+    <div class="card-body">
+      <h5 class="card-title">{{ post.profile.author }}</h5>
+      <p class="card-text">{{ post.description }}</p>
+      <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
+    </div>
+
+
+
+    {% for media in post.media_posts.all %}
+        
+        <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+
+          <div class="carousel-item active">
+             <img src="{{ media.media }}" class="d-block w-100" alt="...">
+          </div>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    {% endfor %}
+
+{% comment %} 
+    <a href="{% url 'main:post-detail' pk=post.id %}"> <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
+  </a> {% endcomment %}
+  
+    {% endif %}
+  
+  </div>
+
+{% endblock content %}
