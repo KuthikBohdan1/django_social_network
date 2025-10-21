@@ -8,5 +8,7 @@ urlpatterns = [
     path('post-create/', views.PostCreateView.as_view(), name="post-create"),
     path('post-detail<int:pk>', views.PostDetailView.as_view(), name="post-detail"),
     path('comments-post<int:post_id>',views.CommentPostCreateView.as_view(), name="comment-post"),
+    path('home/', views.HomeListView.as_view(), name="home"),
+    path('ajax_request/',views.ajax_request, name="ajax_request"),
 ]
 app_name = "main"

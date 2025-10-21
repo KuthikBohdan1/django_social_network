@@ -7,8 +7,8 @@
 <div class="row">
 <div class="col-1">
 {% for comment in comments %}
-{% if comment.author.profile_r.avatar %} {# це капєц #}
-<img src="{{ comment.author.profile_r.avatar.url }}" class="avatar_comment" alt="">
+{% if comment.author.profile.avatar %} {# це капєц #}
+<img src="{{ comment.author.profile.avatar.url }}" class="avatar_comment" alt="">
 {% endif %}</div>
 
 <div class="col-11">
@@ -20,9 +20,8 @@
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p}}
-    <button type="submit"></button>
+    <button type="submit" class="btn btn-primary">Додати</button>
 </form>
-
 
 
 

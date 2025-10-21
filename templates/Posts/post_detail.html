@@ -22,7 +22,7 @@
 
     {% for media in post.media_posts.all %}
           <div class="carousel-item active">
-             <img src="{{ media.media.url }}" class="d-block w-100" alt="...">
+             <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="...">
           </div>
     {% endfor %}
         </div>
@@ -41,6 +41,49 @@
 
   </div>
 
+  <button class="like-button" id="button_like">
+    <span class="icon">👍</span> Like
+  </button>
+
   
+
+
 <a href="{% url 'main:comment-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a>
+
+
+
+<script>
+  
+function ajaxSend(){
+
+}
+
+</script>
+{% comment %} 
+<textarea name="" id="ajax_result" class="form-control"></textarea>
+
+<button class="btn btn-success bnt-lg" onclick="ajaxSend()">ajaxSend</button>
+
+<script>
+  function ajaxSend(){
+    
+    fetch('/ajax_request/')
+    .then(response => {
+      console.log(response)
+      if (!response.ok){
+        throw new Error('Network response was not ok'+ response.statusText);
+      }
+      document.body.classList.remove("bg-warning");
+      document.body.classList.add("bg-success")
+      return response.text()
+    })
+    .then(data => {
+        document.getElementById("ajax_result").innerText = data
+    })
+    .catch(error => console.log('Error:', error))
+  }
+
+
+</script> {% endcomment %}
+
 {% endblock content %}

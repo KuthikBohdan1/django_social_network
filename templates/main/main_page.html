@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="poll-container">
+{% include 'main/list.html' %}    
+</div>
+
+
+{% comment %} 
+<div class="post-list d-flex flex-column align-items-center gap-4">
+    {% for post in posts.all %}
+      <div class="card overflow-hidden" style="width: 500px;">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ post.profile.author }}</h5>
+          <p class="card-text">
+            <small class="text-body-secondary">{{ post.date_publish }}</small>
+          </p>
+        </div>
+  
+        {% if post.media_posts.all %}
+        <a href="{% url 'main:post-detail' pk=post.id %}">
+          <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
+        </a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p class="text-center w-100">Постів немає</p>
+    {% endfor %}
+  </div>
+   {% endcomment %}
+      <div class="justify-content-center">
+
+        <button class="btn btn-primary btn-lg mt-4" onclick="showMore()">Завантажити ще</button>
+      </div>
+  
+{% endblock content %}

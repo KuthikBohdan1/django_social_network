@@ -5,7 +5,14 @@ from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from main.forms import ProfileForm, PostForm, CommentPostForm
+from django.http import HttpResponse
+from time import sleep
+from django.core.paginator import Paginator
 # Create your views here.
+
+async def ajax_request(request):
+    sleep(1)
+    return HttpResponse("Дані отримано успішно!")
 
 
 class ProfileCreateView(LoginRequiredMixin, CreateView):
@@ -56,7 +63,8 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         context = super(PostDetailView, self).get_context_data(**kwargs)
         context["post_id"] = self.kwargs["pk"]
         return context
-
+    def ajax_request(request):
+        return HttpResponse("Дані отримано успішно!")
 class CommentPostCreateView(LoginRequiredMixin, CreateView):
     model = CommentPost
     template_name = "posts/comment_post.html"
@@ -90,6 +98,20 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         for file in files:
             MediaPost.objects.create(post = self.object, media = file)
         return post
+
+class HomeListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = "main/main_page.html"
+    context_object_name = "posts"
+    paginate_by = 2
+
+    def get(self, request):
+        super().get(request)
+
+        if request.headers.get('x-requested-width') == 'XMLHtppsRequest':
+            return render(request, 'polls/list.html', context=self.get_context_data())
+        return render(request, self.template_name, context=self.get_context_data())
+    
 
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):

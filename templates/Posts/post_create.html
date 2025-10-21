@@ -2,7 +2,7 @@
 {% block content %}
     <h2>створення поста</h2>
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post"  enctype="multipart/form-data" onsubmit="return validateForm()">
         {% csrf_token %}
         {{form.as_p}}
 
@@ -12,5 +12,16 @@
           </div>
         <button type="submit" class="btn btn-primary">створити</button>
     </form>
+
+{% comment %} <script>
+    function validateForm() {
+        var name = document.getElementById("name").value;
+        if (name == ""){
+            document.getElementById("error").innerText = "Будь ласка введіть імя"
+            return false;
+        }
+        return false;
+    }
+</script> {% endcomment %}
 
 {% endblock content %}

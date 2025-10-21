@@ -10,7 +10,7 @@
 
 <h3>аватар </h3>
 {% if profile.avatar %}
-<img src="{{ profile.avatar.url }}" alt="...">
+<img src="{{ profile.avatar.url }}" class="profile_avatar" alt="...">
 {% else %}
 <img src={% static 'img/no-avatar.jpg' %} alt="">
 {% endif %}
@@ -38,26 +38,95 @@
 
 {% endfor %}
 
-{% comment %} <div class="d-flex flex-wrap justify-content-center gap-4">
-{% for post in post_list %}
+{% comment %} 
 
-    <div class="col">
-      <div class="card">
-        <img src="" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">{{ post.text }}</p>
-          <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
-        </div>
-      </div>
-</div>
+<style>
+
+@keyframes move {
+ 0% {
+  left: 0;
+ }
+
+50% {
+  left: 200px;
+ }
+
+100% {
+  left: 0;
+ }
+
+}
+  .animated-box{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: relative;
+    animation: move 3s infinite;
+  }
+
+  .box{
+    width: 100px;
+    height: 100px;
+    background-color: green;
+  }
+
+  .box:hover{
+    transform: scale(5,5);
+  }
+
+  #box {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    position: absolute;
+  }
+</style>
+
+<div class="animated-box"></div>
+<div class="box"></div>
 
 
-{% endfor %}
-</div> {% endcomment %}
+<button onclick="moveBox()">рухати коробку</button>
+  <div id="box"></div>
+  <script>
+    function moveBox() {
+      var box = document.getElementById("box");
+      var pos = 0;
+      var interval = setInterval(frame, 5);
+      function frame() {
+        if (pos == 350) {
+          clearInterval(interval);
+        }else{
+          pos++;
+          box.style.top = pos + 'px'
+          box.style.left = pos + 'px'
+        }
+      }
+    }
+  </script>
+
+
+{% comment %} <div class="row justify-content-center">
+  <div class="col-2">
+
+    <button class="btn btn-primary btn-lg" onclick="showMore()">ще</button>
+  </div>
+</div> 
 
 
 
 
 
+<div id="content">це початковий текст</div>
+<button onclick="changeText()">мігія Змінити текст</button>
+
+<script>
+  function changeText() {
+    document.getElementById("myButton").addEventListener("click", function ())
+    document.getElementById("content").innerHTML = "<b>змінений текст</b>"
+    document.getElementById("content").style.color = "red"
+  }
+</script> {% endcomment %}
+
+ 
 {% endblock content %}
