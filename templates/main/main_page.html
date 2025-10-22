@@ -30,7 +30,51 @@
    {% endcomment %}
       <div class="justify-content-center">
 
-        <button class="btn btn-primary btn-lg mt-4" onclick="showMore()">Завантажити ще</button>
+        <button id="show-more" class="btn btn-primary btn-lg mt-4" onclick="showMore()">Завантажити ще</button>
       </div>
+
+      <input type="hidden" id="page-cur" value="{{page_obj.number}}">
+      <input type="hidden" id="page-num" value="{{page_obj.paginator.num_pages}}">
   
+      {% comment %} <div class="col-2">
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-lg">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            {% endif %}
+      
+            {% for page_num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
+              <a class="page-link" href="?page={{ page_num }}" class="">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+      
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div> {% endcomment %}
+      
+
+
+      <div class=" col-2">
+        <nav aria-label="....">
+          <ul class="pagination pagination-lg">
+            {% for page_num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
+              <a class="page-link" href="?page={{ page_num }}" class="">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </div> 
 {% endblock content %}
