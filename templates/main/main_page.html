@@ -1,33 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="row">
+<div class="col-2 left_bar">
+  <div class="accordion accordion-horizontal" style="margin-left:-75px;">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+        {% include 'left_bar.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-10">
 <div class="poll-container">
 {% include 'main/list.html' %}    
 </div>
 
+<div class="col">
+  <h2>none</h2>
+</div>
 
-{% comment %} 
-<div class="post-list d-flex flex-column align-items-center gap-4">
-    {% for post in posts.all %}
-      <div class="card overflow-hidden" style="width: 500px;">
-        <div class="card-body text-center">
-          <h5 class="card-title">{{ post.profile.author }}</h5>
-          <p class="card-text">
-            <small class="text-body-secondary">{{ post.date_publish }}</small>
-          </p>
-        </div>
-  
-        {% if post.media_posts.all %}
-        <a href="{% url 'main:post-detail' pk=post.id %}">
-          <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
-        </a>
-        {% endif %}
-      </div>
-    {% empty %}
-      <p class="text-center w-100">Постів немає</p>
-    {% endfor %}
-  </div>
-   {% endcomment %}
+
       <div class="justify-content-center">
 
         <button id="show-more" class="btn btn-primary btn-lg mt-4" onclick="showMore()">Завантажити ще</button>
@@ -35,38 +32,8 @@
 
       <input type="hidden" id="page-cur" value="{{page_obj.number}}">
       <input type="hidden" id="page-num" value="{{page_obj.paginator.num_pages}}">
-  
-      {% comment %} <div class="col-2">
-        <nav aria-label="Page navigation">
-          <ul class="pagination pagination-lg">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            {% endif %}
-      
-            {% for page_num in page_obj.paginator.page_range %}
-            <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
-              <a class="page-link" href="?page={{ page_num }}" class="">{{ page_num }}</a>
-            </li>
-            {% endfor %}
-      
-            {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div> {% endcomment %}
-      
 
-
-      <div class=" col-2">
+      
         <nav aria-label="....">
           <ul class="pagination pagination-lg">
             {% for page_num in page_obj.paginator.page_range %}
@@ -76,5 +43,8 @@
             {% endfor %}
           </ul>
         </nav>
-      </div> 
+
+
+</div>
+    </div>
 {% endblock content %}

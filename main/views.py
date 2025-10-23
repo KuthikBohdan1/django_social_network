@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMessage, GroupReactionMessage, GroupUser, Profile
 from main.models import CustomUser
@@ -9,6 +9,10 @@ from django.http import HttpResponse
 from time import sleep
 from django.core.paginator import Paginator
 # Create your views here.
+
+async def ajaxInversed(request):
+    print("2")
+    return HttpResponse("s")
 
 async def ajax_request(request):
     sleep(1)
@@ -76,6 +80,15 @@ class CommentPostCreateView(LoginRequiredMixin, CreateView):
         context["id"] = self.kwargs.get("post_id")
         return context
     
+    def get_success_url(self, **kwargs):
+        return reverse_lazy("main:comments-post", kwargs = {'post_id': self.kwargs.get("post_id")})
+
+    def form_valid(self, form, **kwargs):
+        print(self.request.user)
+        form.instance.author = self.request.user
+        form.instance.post = get_object_or_404(Post, id=self.kwargs.get("post_id"))
+        valid = super().form_valid(form)
+        return valid
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm

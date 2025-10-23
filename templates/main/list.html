@@ -3,7 +3,11 @@
     {% for post in posts.all %}
       <div class="card overflow-hidden" style="width: 500px;">
         <div class="card-body text-center">
-          <h5 class="card-title">{{ post.profile.author }}</h5>
+          <div class="row">
+            <div class="col-2"><img src="{{ post.profile.avatar.url }}" class="avatar_post" alt=""></div>
+            <div class="col-2"><h6 class="card-title">{{ post.profile.user.username }}</h6></div>
+          </div>
+          
           <p class="card-text">
             <small class="text-body-secondary">{{ post.date_publish }}</small>
           </p>
@@ -11,11 +15,30 @@
   
         {% if post.media_posts.all %}
         <a href="{% url 'main:post-detail' pk=post.id %}">
-          <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
-        </a>
+          {% comment %} <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="..."> {% endcomment %}
+          {# карусель #}
+
+          <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+              {% for media in post.media_posts.all %}
+                  <div class="carousel-item active">
+                <img src="{{ media.media.url }}" class="d-block w-100" alt="...">
+              </div>
+              {% endfor %}</a>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
         {% endif %}
       </div>
     {% empty %}
       <p class="text-center w-100">Постів немає</p>
     {% endfor %}
   </div>
+

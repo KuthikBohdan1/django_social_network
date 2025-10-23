@@ -35,9 +35,6 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-{% comment %} 
-    <a href="{% url 'main:post-detail' pk=post.id %}"> <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
-  </a> {% endcomment %}
 
   </div>
 
@@ -48,7 +45,7 @@
   
 
 
-<a href="{% url 'main:comment-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a>
+<a href="{% url 'main:comments-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a>
 
 
 
@@ -59,7 +56,7 @@ function ajaxSend(){
 }
 
 </script>
-{% comment %} 
+
 <textarea name="" id="ajax_result" class="form-control"></textarea>
 
 <button class="btn btn-success bnt-lg" onclick="ajaxSend()">ajaxSend</button>
@@ -84,6 +81,6 @@ function ajaxSend(){
   }
 
 
-</script> {% endcomment %}
+</script> 
 
 {% endblock content %}

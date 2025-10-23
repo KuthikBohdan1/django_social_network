@@ -1,4 +1,7 @@
 <header>
+
+    <div class="row">
+    <div class="col-3">
 {% if user.is_authenticated %}
     <form method = "post" action="{% url 'accounts:logout' %}">
         {% csrf_token %}
@@ -10,10 +13,23 @@
     <a href="{% url 'accounts:login' %}">Login</a>
     <a href="{% url 'accounts:register' %}">Register</a>
 {% endif %}
-
+</div>
+<div class="col-4">
     <a href="{% url 'main:post-create' %}" class="btn btn-primary">створити пост</a>
     <a href="{% url 'main:profile-list' %}" class="btn btn-primary">мій профіль</a>
     <a href="{% url 'main:home' %}" class="btn btn-primary">Головна сторінка</a>
+</div>
+
+<div class="col-4">
+
+</div>
+
+<div class="col-1">
+    <button type="button" id="theme-inversed" onclick="ajaxInversed()" class="">
+        dark theme
+    </button>
+</div>
+</div>
 </header>
 
 

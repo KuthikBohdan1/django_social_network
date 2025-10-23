@@ -33,5 +33,8 @@ class CustomUser(AbstractUser):
         error_messages={
             "unique": ("A user with that username already exists."),})
     
+    class Meta:
+        unique_together = ["email"]
+    
     def __str__(self):
         return self.email

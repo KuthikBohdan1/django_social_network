@@ -19,6 +19,14 @@
         border: 3px solid #fff;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
+    .avatar_post {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    }
     
     .post-detail {
         width: 100%;
@@ -36,4 +44,8 @@ body{
 
     background-color: #fff;
     transition: background-color 1s;
+}
+
+.left_bar {
+    position: fixed;
 }
