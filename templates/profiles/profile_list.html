@@ -17,18 +17,19 @@
 
 <div class="post-list">
 {% for post in profile.posts.all %}
-
-<div class="card overflow-hidden" style="width: 300px; height: 300px;">
+<div class="room_list d-flex flex-wrap gap-3">
+<div class="card overflow-hidden " style="width: 300px; height: 300px;">
   <div class="card-body">
     {% comment %} <h5 class="card-title">{{ post.profile.author }}</h5>
     <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p> {% endcomment %}
   </div>
+  
   {% if post.media_posts.all %}
   <a href="{% url 'main:post-detail' pk=post.id %}"> <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="...">
 </a>
 
   {% endif %}
-
+</div>
 </div>
 
 {% empty %}

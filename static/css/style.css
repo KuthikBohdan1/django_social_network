@@ -1,5 +1,11 @@
+body {
+    background-color: lightblue;
+}
+
 .main_post_list {
-    style="width: 600px; height: 600px; flex justify-content-center"
+    width: 600px;
+     height: 600px; 
+
 }
     
     .profile_avatar {
@@ -40,16 +46,12 @@
         /* опціонально, для краси */
     }
     
-body{
-
-    background-color: #fff;
-    transition: background-color 1s;
-}
 
 .left_bar {
     position: fixed;
+    margin-left: 15px;
 }
 
 .post_panel{
-    margin-top: 30px;
+    margin-top: 40px;
 }
