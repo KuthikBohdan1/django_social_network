@@ -20,13 +20,21 @@
           {% comment %} <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="..."> {% endcomment %}
           {# карусель #}
 
-          <div id="carouselExample" class="carousel slide">
+          <div id="carouselExampleIndicators" class="carousel slide">
+            {% if post.media_posts.all|length > 1 %}
+              <div class="carusel-indicators">
+                {% for media in post.media_posts.all %}
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="{{ forloop.counter0 }}" 
+                  {% if forloop.first %} class="active" aria-current="true"{% endif %}
+                  aria-label="Slide {{ forloop.counter }}"></button>
+                {% endfor %}
+              </div>
+            {% endif %}
             <div class="carousel-inner">
-              {% for media in post.media_posts.all %}
-                  <div class="carousel-item active">
-                  {# media #}
-                {% comment %} <img src="{{ media.media.url }}" class="d-block w-100" alt="..."> {% endcomment %}
 
+              {% for media in post.media_posts.all %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">                  {# media #}
+                <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="post image {{ forloop.counter }}">
                 {% if media.media %}
                 {% if media.media.url|endswith:"jpg" or media.media.url|endswith:"png" or media.media.url|endswith:".jpeg" %}
                 <img src="{{ media.media.url }}" alt="files"  class="d-block w-100">
@@ -42,14 +50,16 @@
 
               </div>
               {% endfor %}</a>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              {% if post.media_posts.all|length > 1 %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
+            {% endif %}
           </div>
           </div>
 
@@ -71,10 +81,6 @@
         <p>{{ post.description }}</p>
       </div>
       </div>
-
-    
-
-
     {% empty %}
       <p class="text-center w-100">Постів немає</p>
     {% endfor %}
