@@ -49,3 +49,7 @@ body{
 .left_bar {
     position: fixed;
 }
+
+.post_panel{
+    margin-top: 30px;
+}

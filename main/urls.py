@@ -9,6 +9,7 @@ urlpatterns = [
     path('post-detail<int:pk>', views.PostDetailView.as_view(), name="post-detail"),
     path('comments-post<int:post_id>',views.CommentPostCreateView.as_view(), name="comments-post"),
     path('home/', views.HomeListView.as_view(), name="home"),
+    path('group/', views.GroupListView.as_view(), name="group"),
     path('ajax_request/',views.ajax_request, name="ajax_request"),
     path('ajax-inversed/',views.ajaxInversed, name="ajax-inversed"),
 ]

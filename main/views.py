@@ -116,7 +116,7 @@ class HomeListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "main/main_page.html"
     context_object_name = "posts"
-    paginate_by = 6
+    paginate_by = 3
 
     def get(self, request):
         super().get(request)
@@ -126,6 +126,13 @@ class HomeListView(LoginRequiredMixin, ListView):
         return render(request, self.template_name, context=self.get_context_data())
     
 
+class GroupListView(LoginRequiredMixin, ListView):
+    model = Group
+    template_name = "group/group_list.html"
+    context_object_name = "groups"
+
+    def get_queryset(self):
+        return super().get_queryset()
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):
 #     model = MediaPost
