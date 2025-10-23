@@ -116,7 +116,7 @@ class HomeListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "main/main_page.html"
     context_object_name = "posts"
-    paginate_by = 2
+    paginate_by = 6
 
     def get(self, request):
         super().get(request)
