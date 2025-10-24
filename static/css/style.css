@@ -18,8 +18,8 @@ body {
     }
     
     .avatar_comment {
-        width: 75px;
-        height: 75px;
+        width: 55px;
+        height: 55px;
         object-fit: cover;
         border-radius: 50%;
         border: 3px solid #fff;
@@ -54,4 +54,9 @@ body {
 
 .post_panel{
     margin-top: 40px;
+}
+
+.media_post{
+    width: 400px;
+    height: auto;
 }
