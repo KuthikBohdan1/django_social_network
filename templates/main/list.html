@@ -15,54 +15,45 @@
           </p>
         </div>
   
-        {% if post.media_posts.all %}
+        {% if post.media_posts.all|length > 0 %}
         <a href="{% url 'main:post-detail' pk=post.id %}">
-          {% comment %} <img src="{{ post.media_posts.all.0.media.url }}" class="card-img-bottom" alt="..."> {% endcomment %}
-          {# карусель #}
-
-          <div id="carouselExampleIndicators" class="carousel slide">
+          <div id="carouselExampleIndicators-{{ forloop.counter }}" class="carousel slide">
             {% if post.media_posts.all|length > 1 %}
-              <div class="carusel-indicators">
+              <div class="carousel-indicators">
                 {% for media in post.media_posts.all %}
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="{{ forloop.counter0 }}" 
+                <button type="button" data-bs-target="#carouselExampleIndicators-{{ forloop.parentloop.counter }}" data-bs-slide-to="{{ forloop.counter0 }}" 
                   {% if forloop.first %} class="active" aria-current="true"{% endif %}
                   aria-label="Slide {{ forloop.counter }}"></button>
                 {% endfor %}
               </div>
             {% endif %}
             <div class="carousel-inner">
-
               {% for media in post.media_posts.all %}
-                  <div class="carousel-item {% if forloop.first %}active{% endif %}">                  {# media #}
-                <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="post image {{ forloop.counter }}">
-                {% if media.media %}
-                {% if media.media.url|endswith:"jpg" or media.media.url|endswith:"png" or media.media.url|endswith:".jpeg" %}
-                <img src="{{ media.media.url }}" alt="files"  class="d-block w-100">
-                {% elif media.media.url|endswith:".mp4" %}
-                <video controls autoplay muted class="card-img-top">
-                    <source src="{{ media.media.url }}" type="video/mp4">Ваш браузер не підтримує відео
-                </video>
-                {% else %}
-                <a href="{{ media.media.url }}" class="post-file-link">Завантажити файл</a>
-                {% endif %}
-                {% endif %}
-
-
-              </div>
-              {% endfor %}</a>
-              {% if post.media_posts.all|length > 1 %}
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  {% if media.media.url|endswith:".jpg" or media.media.url|endswith:".png" or media.media.url|endswith:".jpeg" %}
+                    <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="Post image {{ forloop.counter }}">
+                  {% elif media.media.url|endswith:".mp4" %}
+                    <video controls autoplay muted class="d-block w-100">
+                      <source src="{{ media.media.url }}" type="video/mp4">Ваш браузер не підтримує відео
+                    </video>
+                  {% else %}
+                    <a href="{{ media.media.url }}" class="post-file-link">Завантажити файл</a>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+            {% if post.media_posts.all|length > 1 %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators-{{ forloop.counter }}" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators-{{ forloop.counter }}" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Next</span>
             </button>
             {% endif %}
           </div>
-          </div>
-
+        </a>
         {% endif %}
 
         <div class="post_panel">
@@ -74,15 +65,14 @@
                     </a>
                 </div>
             </div>
-        </div>
+          </div>
         </div>
 
-              <div>
-        <p>{{ post.description }}</p>
-      </div>
+        <div>
+          <p>{{ post.description }}</p>
+        </div>
       </div>
     {% empty %}
       <p class="text-center w-100">Постів немає</p>
     {% endfor %}
-  </div>
-
+</div>
