@@ -3,8 +3,6 @@
 
 <h2>post detail</h2>
 
-
-
 <div class="card overflow-hidden" style="max-width: 700px; max-height: 700px;">
     <div class="card-body">
       <h5 class="card-title">{{ post.profile.author }}</h5>
@@ -12,20 +10,24 @@
       <p class="card-text"><small class="text-body-secondary">{{ post.date_publish }}</small></p>
     </div>
 
-        <div id="carouselExampleIndicators" class="carousel slide">
+    <div id="carouselExampleIndicators" class="carousel slide">
+        {% if post.media_posts.all|length > 1 %}
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          {% for media in post.media_posts.all %}
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" 
+            {% if forloop.first %}class="active" aria-current="true"{% endif %} 
+            aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
         </div>
+        {% endif %}
         <div class="carousel-inner">
-
-    {% for media in post.media_posts.all %}
-          <div class="carousel-item active">
-             <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="...">
+          {% for media in post.media_posts.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+             <img src="{{ media.media.url }}" class="d-block w-100 post-detail" alt="Post media {{ forloop.counter }}">
           </div>
-    {% endfor %}
+          {% endfor %}
         </div>
+        {% if post.media_posts.all|length > 1 %}
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
@@ -34,21 +36,16 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
-      </div>
+        {% endif %}
+    </div>
+</div>
 
-  </div>
-
-  <button class="like-button" id="button_like">
+<button class="like-button" id="button_like">
     <span class="icon">👍</span> Like
-  </button>
-
-  
-
+</button>
 
 <a href="{% url 'main:comments-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a>
-
-
-
+{% comment %} 
 <script>
   
 function ajaxSend(){
@@ -80,7 +77,6 @@ function ajaxSend(){
     .catch(error => console.log('Error:', error))
   }
 
-
-</script> 
+</script>  {% endcomment %}
 
 {% endblock content %}
