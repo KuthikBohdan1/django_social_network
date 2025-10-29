@@ -74,7 +74,7 @@ class GroupUser(models.Model):
     
 class GroupMessage(models.Model):
     parent = models.ForeignKey("GroupMessage", on_delete=models.CASCADE, null=True, blank=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="messages_group")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file  = models.FileField(null=True, blank=True, upload_to="group_message/")
     message = models.TextField()

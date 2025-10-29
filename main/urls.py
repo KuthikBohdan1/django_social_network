@@ -12,5 +12,6 @@ urlpatterns = [
     path('group/', views.GroupListView.as_view(), name="group"),
     path('ajax_request/',views.ajax_request, name="ajax_request"),
     path('ajax-inversed/',views.ajaxInversed, name="ajax-inversed"),
+    path('load-data/', views.ajaxLoadData, name="load_data"),
 ]
 app_name = "main"

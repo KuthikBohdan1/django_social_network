@@ -8,6 +8,8 @@ from main.forms import ProfileForm, PostForm, CommentPostForm
 from django.http import HttpResponse
 from time import sleep
 from django.core.paginator import Paginator
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 async def ajaxInversed(request):
@@ -18,6 +20,17 @@ async def ajax_request(request):
     sleep(1)
     return HttpResponse("Дані отримано успішно!")
 
+def ajaxLoadData(request):
+    print("виконується функція ajaxLoadGroupGessages")
+    id = request.GET.get("id")
+    data = GroupMessage.objects.filter(group__id = id).values_list('message', flat=True)
+    data = list(data)##це допомагає при боротьбі з query set
+    print(data)
+    ###з js можна працювати тільки json файли тому маєм перетворити в json
+    print(id)
+    return JsonResponse({
+        "message":data
+    })
 
 class ProfileCreateView(LoginRequiredMixin, CreateView):
     model = Profile
@@ -116,7 +129,7 @@ class HomeListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "main/main_page.html"
     context_object_name = "posts"
-    paginate_by = 3
+    paginate_by = 1
 
     def get(self, request):
         super().get(request)
@@ -130,10 +143,14 @@ class GroupListView(LoginRequiredMixin, ListView):
     model = Group
     template_name = "group/group_list.html"
     context_object_name = "groups"
+    
+
 
     def get_queryset(self):
 
         return super().get_queryset()
+
+
 
 # class MediaPostCreateView(LoginRequiredMixin, CreateView):
 #     model = MediaPost
