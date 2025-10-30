@@ -73,14 +73,14 @@ class GroupUser(models.Model):
         return f"{self.user} / {self.group}"
     
 class GroupMessage(models.Model):
-    parent = models.ForeignKey("GroupMessage", on_delete=models.CASCADE, null=True, blank=True)
+    parent = models.ForeignKey("GroupMessage", on_delete=models.CASCADE, null=True, blank=True, related_name="son_message")
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="messages_group")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     file  = models.FileField(null=True, blank=True, upload_to="group_message/")
     message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"{self.parent} / {self.message}"
+        return f"{self.message} / {self.user} / {self.date} / {self.id}" 
 
 class GroupReactionMessage(models.Model):
     REACTION_CHOICES = (

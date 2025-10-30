@@ -69,3 +69,67 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+
+
+
+
+
+
+{
+    "message": [
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-29T21:25:54.790155+02:00",
+            "message": "message 1",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-29T21:56:20.272447+02:00",
+            "message": "message 2",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T14:29:27.243248+02:00",
+            "message": "adssads",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T14:29:36.609726+02:00",
+            "message": "asdasdasda",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T14:29:42.929441+02:00",
+            "message": "asdasdsa",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T15:01:13.849849+02:00",
+            "message": "asdasd",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T15:05:20.273577+02:00",
+            "message": "sfdfsd",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T16:05:18.767609+02:00",
+            "message": "returnjnjknj",
+            "file": null
+        },
+        {
+            "user_email": "admin@gmail.com",
+            "date": "2025-10-30T17:52:48.496852+02:00",
+            "message": "куегкт 2",
+            "file": null
+        }
+    ]
+}

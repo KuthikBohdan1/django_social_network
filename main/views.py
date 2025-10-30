@@ -10,7 +10,7 @@ from time import sleep
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
-from main.serializers import GroupMessageSerializer
+from main.serializers import GroupMessageSerializer, structurator
 # Create your views here.
 
 async def ajaxInversed(request):
@@ -28,6 +28,8 @@ def ajaxLoadData(request):
     # data = list(data)##це допомагає при боротьбі з query set
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
+    result = structurator(group_id=1)
+    print(f'зібраний чат {result}')
     return JsonResponse({
         "message":serializer.data
     })
