@@ -7,7 +7,6 @@
         {% csrf_token %}
         <button type="submit">logout</button>
     </form>
-    {% comment %} <a href="{% url 'accounts:logout' %}">logout</a> {% endcomment %}
 {% else %}
 
     <a href="{% url 'accounts:login' %}">Login</a>
@@ -15,6 +14,7 @@
 {% endif %}
 </div>
 <div class="col-5">
+
     <a href="{% url 'main:post-create' %}" class="btn btn-primary">створити пост</a>
     <a href="{% url 'main:profile-list' %}" class="btn btn-primary">мій профіль</a>
     <a href="{% url 'main:home' %}" class="btn btn-primary">Головна сторінка</a>

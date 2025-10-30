@@ -10,6 +10,7 @@ from time import sleep
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
+from main.serializers import GroupMessageSerializer
 # Create your views here.
 
 async def ajaxInversed(request):
@@ -23,13 +24,12 @@ async def ajax_request(request):
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
-    data = GroupMessage.objects.filter(group__id = id).values_list('message', flat=True)
-    data = list(data)##це допомагає при боротьбі з query set
-    print(data)
-    ###з js можна працювати тільки json файли тому маєм перетворити в json
-    print(id)
+    # data = GroupMessage.objects.filter(group__id = id).values_list('message', flat=True)
+    # data = list(data)##це допомагає при боротьбі з query set
+    messages = GroupMessage.objects.filter(group__id = id)
+    serializer = GroupMessageSerializer(messages, many=True)
     return JsonResponse({
-        "message":data
+        "message":serializer.data
     })
 
 class ProfileCreateView(LoginRequiredMixin, CreateView):

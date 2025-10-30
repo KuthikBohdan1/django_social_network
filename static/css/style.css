@@ -65,3 +65,17 @@ body {
     padding-left: 160px;
     padding-right: 160px;
 }
+.chat-bar{
+    padding-left: -100px;
+    
+}
+.message-pools{
+    background-color: whitesmoke;
+    height: 600px;
+
+}
+
+.container{
+    overflow-y: scroll;
+}
+/*   */
