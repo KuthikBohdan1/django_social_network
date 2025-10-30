@@ -10,8 +10,8 @@ urlpatterns = [
     path('comments-post<int:post_id>',views.CommentPostCreateView.as_view(), name="comments-post"),
     path('home/', views.HomeListView.as_view(), name="home"),
     path('group/', views.GroupListView.as_view(), name="group"),
-    path('ajax_request/',views.ajax_request, name="ajax_request"),
     path('ajax-inversed/',views.ajaxInversed, name="ajax-inversed"),
     path('load-data/', views.ajaxLoadData, name="load_data"),
-]
+    path('see-<id>/', views.SeeSroc, name="see")
+    ]
 app_name = "main"

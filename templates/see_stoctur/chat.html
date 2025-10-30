@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Чат групи {{ group_id }}</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .message { padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 6px; }
+    .children { margin-left: 24px; margin-top: 4px; }
+    .meta { font-size: 12px; color: #666; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+
+  <h2>Чат — група {{ group_id }}</h2>
+
+  {% for key, m in result.messages.items %}
+    <div class="message">
+      <div class="meta">#{{ key }} — {{ m.obj.author }} · {{ m.obj.created_at }}</div>
+      <div class="body">{{ m.obj }}</div>
+
+      {% if m.soons %}
+        <div class="children">
+          {% for sk, child in m.soons.items %}
+            <div class="message">
+              <div class="meta">#{{ child.id }} — {{ child.obj.author }} · {{ child.obj.created_at }}</div>
+              <div class="body">{{ child.obj }}</div>
+
+              {% if child.soons %}
+                <div class="children">
+                  {% for sk2, c2 in child.soons.items %}
+                    <div class="message">
+                      <div class="meta">#{{ c2.id }} — {{ c2.obj.author }} · {{ c2.obj.created_at }}</div>
+                      <div class="body">{{ c2.obj }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </div>
+  {% endfor %}
+</body>
+</html>

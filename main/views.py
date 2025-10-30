@@ -17,10 +17,6 @@ async def ajaxInversed(request):
     print("2")
     return HttpResponse("s")
 
-async def ajax_request(request):
-    sleep(1)
-    return HttpResponse("Дані отримано успішно!")
-
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
@@ -33,6 +29,13 @@ def ajaxLoadData(request):
     return JsonResponse({
         "message":serializer.data
     })
+
+def SeeSroc(request, **kwargs):
+    result = structurator(group_id=kwargs.get("id"))
+    context = {
+        "result":result,
+    }
+    return render(request, "see_stoctur/chat.html", context)
 
 class ProfileCreateView(LoginRequiredMixin, CreateView):
     model = Profile
@@ -84,6 +87,7 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         return context
     def ajax_request(request):
         return HttpResponse("Дані отримано успішно!")
+    
 class CommentPostCreateView(LoginRequiredMixin, CreateView):
     model = CommentPost
     template_name = "posts/comment_post.html"
@@ -135,7 +139,6 @@ class HomeListView(LoginRequiredMixin, ListView):
 
     def get(self, request):
         super().get(request)
-
         if request.headers.get('x-requested-width') == 'XMLHtppsRequest':
             return render(request, 'polls/list.html', context=self.get_context_data())
         return render(request, self.template_name, context=self.get_context_data())
@@ -146,15 +149,5 @@ class GroupListView(LoginRequiredMixin, ListView):
     template_name = "group/group_list.html"
     context_object_name = "groups"
     
-
-
     def get_queryset(self):
-
         return super().get_queryset()
-
-
-
-# class MediaPostCreateView(LoginRequiredMixin, CreateView):
-#     model = MediaPost
-#     form_class = MediaPostForm
-#     template_name = ""
