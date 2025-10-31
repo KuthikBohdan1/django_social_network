@@ -27,7 +27,7 @@ def ajaxLoadData(request):
     result = structurator(group_id=1)
     print(f'зібраний чат {result}')
     return JsonResponse({
-        "message":serializer.data
+        "message": serializer.data,
     })
 
 def SeeSroc(request, **kwargs):

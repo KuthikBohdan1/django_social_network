@@ -69,7 +69,6 @@ function ajaxInversed(){
                 console.log(html)
                 console.log(data)
                 document.getElementsByClassName("message-pools")[0].innerHTML = html
-
             })
             .catch(error => console.error("Помилка:", error));
     }
