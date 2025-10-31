@@ -25,13 +25,16 @@ def ajaxLoadData(request):
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
     result = structurator(group_id=1)
-    print(f'зібраний чат {result}')
+    result_json = json.dumps(result, ensure_ascii=False, indent=4)
+    print(f'зібраний чат {result_json}')
     return JsonResponse({
         "message": serializer.data,
+        "result": result_json,
     })
 
 def SeeSroc(request, **kwargs):
     result = structurator(group_id=kwargs.get("id"))
+    print(result)
     context = {
         "result":result,
     }

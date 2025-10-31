@@ -55,6 +55,8 @@ function ajaxInversed(){
 
 
 
+
+
     function showGroup(groupId) {
         fetch(`/load-data/?id=${groupId}`)
             .then(response => response.json())
@@ -70,6 +72,12 @@ function ajaxInversed(){
                 console.log(data)
                 document.getElementsByClassName("message-pools")[0].innerHTML = html
             })
+
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log(data.result)
+            //     document.getElementById("message-pools").textContent = JSON.stringify(data, null, 2);
+            // })
             .catch(error => console.error("Помилка:", error));
     }
 
