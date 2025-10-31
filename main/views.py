@@ -20,11 +20,9 @@ async def ajaxInversed(request):
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
-    # data = GroupMessage.objects.filter(group__id = id).values_list('message', flat=True)
-    # data = list(data)##це допомагає при боротьбі з query set
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
-    result = structurator(group_id=1)
+    result = structurator(group_id=id)
     result_json = json.dumps(result, ensure_ascii=False, indent=4)
     print(f'зібраний чат {result_json}')
     return JsonResponse({

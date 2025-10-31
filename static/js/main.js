@@ -59,25 +59,30 @@ function ajaxInversed(){
 
     function showGroup(groupId) {
         fetch(`/load-data/?id=${groupId}`)
-            .then(response => response.json())
-            .then(data => {
-                const html = data.message.map(msg => `
-                    <div class="alert alert-light" role="alert">
-                    <strong>${msg.user_email}</strong>
-                    <p>${msg.message}
-                    </p>
-                    </div>
-                    `).join("");
-                console.log(html)
-                console.log(data)
-                document.getElementsByClassName("message-pools")[0].innerHTML = html
-            })
-
             // .then(response => response.json())
             // .then(data => {
-            //     console.log(data.result)
-            //     document.getElementById("message-pools").textContent = JSON.stringify(data, null, 2);
+            //     const html = data.message.map(msg => `
+            //         <div class="alert alert-light" role="alert">
+            //         <strong>${msg.user_email}</strong>
+            //         <p>${msg.message}
+            //         </p>
+            //         </div>
+            //         `).join("");
+            //     console.log(html)
+            //     console.log(data)
+            //     document.getElementsByClassName("message-pools")[0].innerHTML = html
             // })
+
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.result)
+                const html = data.result
+                // const html = data.result.map(msg => `
+                //             <h2>Чат — група ${ result.group_id }</h2>
+                //             `).join("");
+                console.log(html)
+                document.getElementsByClassName("message-pools")[0].innerHTML = html
+            })
             .catch(error => console.error("Помилка:", error));
     }
 
