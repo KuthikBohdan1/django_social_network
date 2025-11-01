@@ -75,14 +75,65 @@ function ajaxInversed(){
 
             .then(response => response.json())
             .then(data => {
-                console.log(data.result)
-                const html = data.result
+                console.log(data.result);
+                // const html = data.result
                 // const html = data.result.map(msg => `
                 //             <h2>Чат — група ${ result.group_id }</h2>
                 //             `).join("");
-                console.log(html)
-                document.getElementsByClassName("message-pools")[0].innerHTML = html
+                // console.log(html)
+                const result = JSON.parse(data.result);
+                const messages = result.messages;
+
+                const container = document.getElementById("message")
+
+                container.innerHTML = "";
+
+                console.log(messages)
+                for (key in messages){
+                    const message = messages[key];
+                    console.log(message.id);
+
+                    let html = `<div>
+                    <p><b>Батько ${message.id}</b>: ${message.obj}</p>
+                </div>`;
+
+                        if (message.soons && Object.keys(message.soons).length > 0) {
+                            console.log("Soons:", message.soons);
+                            const html = `
+                            пост    ${message.id}
+                            `;
+                            html += renderMessages(message.soons)
+                        }
+                        else {
+                            console.log("синів нема:", message.soons);
+                            const html = `
+                            пост ${message.id}
+                            `;
+                        }  
+                    container.innerHTML += html;
+                }
             })
             .catch(error => console.error("Помилка:", error));
     }
 
+///////////  то шось наподобі parent_structurator(
+function renderMessages(messages) {
+    let html = "" //це локальна змінна
+    for (const key in messages) {
+        const message = messages[key];
+
+        html += `<div class="reply">
+        <p><b>Син ${message.id}</b>: ${message.obj}</p>
+        </div>`;
+
+        if (message.soons && Object.keys(message.soons).length > 0) {
+            html += renderMessages(message.soons);
+        }
+        else{
+            console.log(message.id , "немає синів");
+        
+        }
+
+    return html;
+
+}}
