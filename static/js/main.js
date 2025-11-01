@@ -93,23 +93,25 @@ function ajaxInversed(){
                     const message = messages[key];
                     console.log(message.id);
 
-                    let html = `<div>
-                    <p><b>Батько ${message.id}</b>: ${message.obj}</p>
-                </div>`;
+                    let html = ``;
 
                         if (message.soons && Object.keys(message.soons).length > 0) {
                             console.log("Soons:", message.soons);
-                            html = `
-                            пост    ${message.id}
+                            html = `<div class="card">
+                            пост:${message.id}
+                            <b>${message.obj}</b>
                             `;
                             html += renderMessages(message.soons)
                         }
                         else {
                             console.log("синів нема:", message.soons);
-                            html = `
-                            пост ${message.id}
+                            html = `<div class="card">
+                            пост id${message.id}
+                            <b>${message.obj}
+                            </b>
                             `;
-                        }  
+                        }
+                    html +=   `</div> <br>`
                     container.innerHTML += html;
                 }
             })
@@ -119,14 +121,14 @@ function ajaxInversed(){
 ///////////  то шось наподобі parent_structurator(
 function renderMessages(messages) {
     let html = "" //це локальна змінна
-    for (const key in messages) {
+    for (const key in messages) {  ////цикл
         const message = messages[key];
 
-        html += `<div class="reply">
-        <p><b>Син ${message.id}</b>: ${message.obj}</p>
+        html += `<div class="card">
+        <p><b>Син${message.id}</b>: ${message.obj}</p>
         </div>`;
 
-        if (message.soons && Object.keys(message.soons).length > 0) {
+        if (message.soons && Object.keys(message.soons).length > 0) { ///// умова чиє сини
             html += renderMessages(message.soons);
         }
         else{
