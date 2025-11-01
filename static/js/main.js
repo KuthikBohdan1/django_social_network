@@ -99,14 +99,14 @@ function ajaxInversed(){
 
                         if (message.soons && Object.keys(message.soons).length > 0) {
                             console.log("Soons:", message.soons);
-                            const html = `
+                            html = `
                             пост    ${message.id}
                             `;
                             html += renderMessages(message.soons)
                         }
                         else {
                             console.log("синів нема:", message.soons);
-                            const html = `
+                            html = `
                             пост ${message.id}
                             `;
                         }  
@@ -132,8 +132,8 @@ function renderMessages(messages) {
         else{
             console.log(message.id , "немає синів");
         
+
         }
-
-    return html;
-
-}}
+}
+return html;
+}
