@@ -24,7 +24,10 @@
 </div>
 </div>
 
-
-
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">додати</button>
+</form>
 
 {% endblock content %}

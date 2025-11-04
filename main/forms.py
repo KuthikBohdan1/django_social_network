@@ -31,10 +31,13 @@ class CommentPostForm(forms.ModelForm):
             'media': ClearableFileInput,
         }
 
-# class MediaPostForm(forms.ModelForm):
-#     class Meta:
-#         model = MediaPost
-#         fields = ['media']
-#         widgets = {
-#             'media': ClearableFileInput(),
-#         }
+class GroupMessageForm(forms.ModelForm):
+    class Meta:
+        model = GroupMessage
+        fields = ['parent','message']
+
+        widgets = {
+            'parent': TextInput,
+            'group': TextInput,
+            'message': TextInput,
+        }

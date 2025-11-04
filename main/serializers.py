@@ -1,6 +1,12 @@
 from rest_framework import serializers
-from main.models import GroupMessage
+from main.models import GroupMessage, Post
 from django.shortcuts import get_object_or_404
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
 
 def parent_structurator(message_id):
     message_get = get_object_or_404(GroupMessage, id = message_id)

@@ -4,13 +4,13 @@ from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMess
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileForm, PostForm, CommentPostForm
+from main.forms import ProfileForm, PostForm, CommentPostForm, GroupMessageForm
 from django.http import HttpResponse
 from time import sleep
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
-from main.serializers import GroupMessageSerializer, structurator
+from main.serializers import GroupMessageSerializer, structurator, PostSerializer
 # Create your views here.
 
 async def ajaxInversed(request):
@@ -109,6 +109,7 @@ class CommentPostCreateView(LoginRequiredMixin, CreateView):
         form.instance.post = get_object_or_404(Post, id=self.kwargs.get("post_id"))
         valid = super().form_valid(form)
         return valid
+    
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -136,13 +137,8 @@ class HomeListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = "main/main_page.html"
     context_object_name = "posts"
-    paginate_by = 1
-
-    def get(self, request):
-        super().get(request)
-        if request.headers.get('x-requested-width') == 'XMLHtppsRequest':
-            return render(request, 'polls/list.html', context=self.get_context_data())
-        return render(request, self.template_name, context=self.get_context_data())
+    paginate_by = 3
+    serializer_class = PostSerializer
     
 
 class GroupListView(LoginRequiredMixin, ListView):
@@ -150,5 +146,17 @@ class GroupListView(LoginRequiredMixin, ListView):
     template_name = "group/group_list.html"
     context_object_name = "groups"
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = GroupMessageForm()
+        return context
+    def post(self, request, *args, **kwargs):
+        form = GroupMessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("main:group")
+        else:
+            return redirect("main:group")        
+
     def get_queryset(self):
         return super().get_queryset()

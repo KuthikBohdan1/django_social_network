@@ -79,4 +79,13 @@ body {
     overflow-y: scroll;
     height:400px ;
 }
+
+.comment-media{
+    max-width:300px ;
+    max-height:300px;
+}
+
+.form-add-comment{
+    padding-top:100px ;
+}
 /*   */

@@ -1,45 +1,3 @@
-function showMore() {
-    var pageCur = Number(document.getElementById("page-cur").value);
-    var pageNum = Number(document.getElementById("page-num").value);
-    // alert(pageCur)
-    pageCur += 1
-fetch('?page=' + pageCur, {
-           headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-    }}
-)
-
-    .then(response => {
-        console.log(response)
-        if (!response.ok) {
-            throw new Error('Network response ok ' + response.statusText);
-
-        }
-        return response.text()
-    })
-    .then(data => {
-        document.getElementsByClassName("poll-container")[0].innerHTML += data
-        document.getElementById("page-cur").value = pageCur;
-        if (pageCur == pageNum){
-            document.getElementById("show-more").classList.add("disable");
-        }
-        
-        var numPages = document.getElementsByClassName("pagination")[0];
-        let ind = 1
-        for (let nP of numPages.children){
-           if (nP.classList.contains("active")){
-            nP.classList.toggle("active");
-           }
-           if(pageCur == ind){
-            nP.classList.add("disabled");
-           }
-           ind ++;
-        }
-    })
-    .catch(error => console.log('Error:', error));
-
-
-}
 
 function ajaxInversed(){
     fetch("/ajax-inversed/")
@@ -52,8 +10,6 @@ function ajaxInversed(){
     })
     .catch(error => console.log('Error:', error))
 }
-
-
 
 
 
@@ -125,7 +81,7 @@ function renderMessages(messages) {
         const message = messages[key];
 
         html += `<div class="card">
-        <p><b>Син${message.id}</b>: ${message.obj}</p>
+        <p><b>відповідь${message.id}</b>: ${message.obj}</p>
         </div>`;
 
         if (message.soons && Object.keys(message.soons).length > 0) { ///// умова чиє сини

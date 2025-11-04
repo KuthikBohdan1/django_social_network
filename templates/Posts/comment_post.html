@@ -6,19 +6,19 @@
 <a href="{% url 'main:post-detail' pk=id %}"> <p class="btn btn-primary">назад</p> </a>
 
 
-<div class="row">
-<div class="col-1">
+
 {% for comment in comments %}
-<div class="alert alert-dark" role="alert" style="width: 600px; height: 200px;">
-{% if comment.author.profile.avatar %} {# це капєц #}
+<div class="card">
+
+{% if comment.author.profile.avatar %} 
 <img src="{{ comment.author.profile.avatar.url }}" class="avatar_comment" alt="">
 {% endif %}
 
-<div class="col-11">
 <h5>{{ comment.text }}</h5>
+<div class="card-img">
 {% if comment.media %}
   {% if comment.media.url|endswith:".jpg" or comment.media.url|endswith:".png" or comment.media.url|endswith:".jpeg" %}
-    <img src="{{ comment.media.url }}" class="d-block w-100 post-detail" alt="">
+   <img src="{{ comment.media.url }}" class="d-block w-100 post-detail" alt="">
   {% elif comment.media.url|endswith:".mp4" %}
     <video controls autoplay muted class="d-block w-100">
       <source src="{{ comment.media.url }}" type="video/mp4">Ваш браузер не підтримує відео
@@ -29,18 +29,18 @@
 </div>
 
 {% endif %}
-
-
-</div></div>
-{% endfor %}
-  </div>
 </div>
+</div>
+
+
+{% endfor %}
+
+
+<div class="form-add-comment">
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p}}
     <button type="submit" class="btn btn-primary">Додати</button>
 </form>
-
-
-
+</div>
 {% endblock content %}
