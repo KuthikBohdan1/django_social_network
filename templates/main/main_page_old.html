@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+<div class="col-2 left_bar">
+  <div class="accordion accordion-horizontal" style="margin-left:-75px;">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" >
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+        {% include 'left_bar.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-11">
+<div class="poll-container" id="posts-container">
+{% include 'main/list.html' %}    
+</div>
+
+<div class="col">
+  <h2>none</h2>
+</div>
+      <div class="justify-content-center">
+        <button id="load-more-btn" class="btn btn-primary">Завантажити ще</button>
+      </div>
+
+      <input type="hidden" id="page-cur" value="{{page_obj.number}}">
+      <input type="hidden" id="page-num" value="{{page_obj.paginator.num_pages}}">
+
+        <nav aria-label="....">
+          <ul class="pagination pagination-lg">
+            {% for page_num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == page_num %}active{% endif %}">
+              <a class="page-link" href="?page={{ page_num }}" class="">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+
+
+</div>
+    </div>
+
+
+
+
+<script>
+let currentPage = 1;
+
+async function loadPages() {
+  try {
+
+  
+  const response = await fatch('{{ api_url }}?page=${currentPage}');
+  const data = await response.json();
+  const postsContainer = document.getElementById('poll-container');
+
+date.results.forEach(post => {
+  const postHtml = `
+  <p>${post.description}</p>
+  `;
+  postsContainer.innerHTML += postHtml;
+});
+
+if (!data.next) {
+  const loadMoreBtn = document.getElementById('load-more-btn');
+}
+
+}catch (error) {
+  console.error('Помилка завантаження постів: ', error);
+}
+
+}
+</script>
+{% endblock content %}

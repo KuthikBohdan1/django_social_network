@@ -9,6 +9,10 @@ from django.http import HttpResponse
 from time import sleep
 from django.core.paginator import Paginator
 import json
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from main.serializers import GroupMessageSerializer, structurator, PostSerializer
 # Create your views here.
@@ -133,13 +137,32 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             MediaPost.objects.create(post = self.object, media = file)
         return post
 
-class HomeListView(LoginRequiredMixin, ListView):
-    model = Post
-    template_name = "main/main_page.html"
-    context_object_name = "posts"
-    paginate_by = 3
-    serializer_class = PostSerializer
+# class HomeListView(LoginRequiredMixin, ListView):
+#     model = Post
+#     template_name = "main/main_page.html"
+#     context_object_name = "post"
+#     paginate_by = 3
+#     serializer_class = PostSerializer
+class PostPagination(PageNumberPagination):
+    page_size = 3  # Кількість постів на сторінці
+    page_size_query_param = 'page_size'  # Параметр для зміни розміру сторінки
+    max_page_size = 50  # Максимальний розмір сторінки
     
+class PostListAPiView(generics.ListAPIView):
+    queryset = Post.objects.filter()
+    serializer_class = PostSerializer
+    pagination_class = PostPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()    
+        return queryset
+
+def posts_list_view(request):
+    context = {
+        'page_title': 'Список постів',
+        'api_url': '/api/posts/',  # URL для API запитів
+    }
+    return render(request, 'home/posts_list.html', context)
 
 class GroupListView(LoginRequiredMixin, ListView):
     model = Group
@@ -150,6 +173,7 @@ class GroupListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["form"] = GroupMessageForm()
         return context
+    
     def post(self, request, *args, **kwargs):
         form = GroupMessageForm(request.POST)
         if form.is_valid():

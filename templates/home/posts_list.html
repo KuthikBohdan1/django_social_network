@@ -56,5 +56,19 @@
         }
     }
     
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPosts();
+        // Додаємо обробник кліку для кнопки "Завантажити ще"
+        document.getElementById('load-more-btn').addEventListener('click', loadPosts);
+        
+        // Додаємо обробник кліку для кнопок лайків 
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.like-btn')) {
+                const postId = e.target.closest('.like-btn').dataset.postId;
+                toggleLike(postId);
+            }
+        });
+    });
 </script>
 {% endblock content %}
