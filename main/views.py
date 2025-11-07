@@ -16,6 +16,10 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from main.serializers import GroupMessageSerializer, structurator, PostSerializer
 # Create your views here.
+class Group_id:
+    def __init__(self):
+        self.value = None
+group_id = Group_id()
 
 async def ajaxInversed(request):
     print("2")
@@ -24,6 +28,7 @@ async def ajaxInversed(request):
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
+    group_id.value = id
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
     result = structurator(group_id=id)
@@ -33,6 +38,7 @@ def ajaxLoadData(request):
         "message": serializer.data,
         "result": result_json,
     })
+
 
 def SeeSroc(request, **kwargs):
     result = structurator(group_id=kwargs.get("id"))
@@ -178,6 +184,9 @@ class GroupListView(LoginRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         form = GroupMessageForm(request.POST)
         if form.is_valid():
+            print(group_id.value)
+            form.instance.group = Group.objects.get(id = group_id.value)
+            form.instance.user = CustomUser.objects.get(id = request.user.id)
             form.save()
             return redirect("main:group")
         else:

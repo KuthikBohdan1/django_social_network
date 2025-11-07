@@ -3,9 +3,11 @@ from main.models import GroupMessage, Post
 from django.shortcuts import get_object_or_404
 
 class PostSerializer(serializers.ModelSerializer):
+    profile_user_email = serializers.CharField(source = 'profile.user.email', read_only=True)
+    profile_avatar = serializers.CharField(source = 'profile.avatar', read_only=True)
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['parent','profile_user_email','profile_avatar','description','date_publish']
 
 
 def parent_structurator(message_id):

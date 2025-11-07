@@ -41,13 +41,11 @@
         <div class="card overflow-hidden" style="width: 600px; max-height: 650px;">
         <div class="card-body text-center">
           <div class="row">
-            <div class="col-2"><img src="${ post.profile }" class="avatar_post" alt=""></div>
-            <div class="col-2"><h6 class="card-title">${ post.profiles }</h6></div>
+            <div class="col-2"><img src="${ post.profile_avatar }" class="avatar_post" alt=""></div>
+            <div class="col-4"><h6 class="card-title">${ post.profile_user_email }</h6></div>
           </div>
-
-            
-            <img src="${ post.media_posts.all }" class="d-block w-100" alt="...">
           <p class="card-text">
+
             <small class="text-body-secondary">${ post.date_publish }</small>
           </p>
         </div>
