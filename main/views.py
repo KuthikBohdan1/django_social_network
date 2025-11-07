@@ -137,12 +137,13 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             MediaPost.objects.create(post = self.object, media = file)
         return post
 
-# class HomeListView(LoginRequiredMixin, ListView):
-#     model = Post
-#     template_name = "main/main_page.html"
-#     context_object_name = "post"
-#     paginate_by = 3
-#     serializer_class = PostSerializer
+class HomeListView(LoginRequiredMixin, ListView):
+    model = Post
+    template_name = "main/main_page_old.html"
+    context_object_name = "post"
+    paginate_by = 3
+    serializer_class = PostSerializer
+    
 class PostPagination(PageNumberPagination):
     page_size = 3  # Кількість постів на сторінці
     page_size_query_param = 'page_size'  # Параметр для зміни розміру сторінки
