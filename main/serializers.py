@@ -5,10 +5,14 @@ from django.shortcuts import get_object_or_404
 class PostSerializer(serializers.ModelSerializer):
     profile_user_email = serializers.CharField(source = 'profile.user.email', read_only=True)
     profile_avatar = serializers.CharField(source = 'profile.avatar', read_only=True)
+#    media = 
     class Meta:
         model = Post
-        fields = ['parent','profile_user_email','profile_avatar','description','date_publish']
+        fields = ['parent','profile_user_email','profile_avatar','description','date_publish','id']#,'media'
 
+def get_media(self):
+    post = Post.objects.get()
+    media = post.media_posts.all()
 
 def parent_structurator(message_id):
     message_get = get_object_or_404(GroupMessage, id = message_id)
@@ -18,10 +22,10 @@ def parent_structurator(message_id):
     for message in son_messages:
         print(message)
         context[f"soon{message.id}"] = {
-            "obj": message.message,
-            "id": message.id,
+            'obj': message.message,
+            'id': message.id,
             'user': message.user.email,
-            "soons": parent_structurator(message_id=message.id)
+            'soons': parent_structurator(message_id=message.id)
         }
     return context
 
@@ -34,7 +38,7 @@ def structurator(group_id):
             'obj': parent_message.message,
             'id': parent_message.id,
             'user': parent_message.user.email,
-            "soons": parent_structurator(message_id = parent_message.id),
+            'soons': parent_structurator(message_id = parent_message.id),
         }
  
     context = {
