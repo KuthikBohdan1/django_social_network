@@ -48,8 +48,27 @@
 
           <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-            <div class="carousel-item active">
-            <img src="..." class="d-block w-100" alt="...">
+            ${post.media.map((mediaItem, index) => {
+                const file = mediaItem.media;
+                const type = file.split('.').pop().toLowerCase();
+
+                if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(type)) {
+
+                    return `
+                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <img src="${file}" class="d-block w-100" alt="image">
+                    </div>
+                `;
+                } else if (['mp4', 'webm', 'ogg'].includes(type)){
+                    return `
+                    <div class="carousel-item ${index === 0 ? 'active': ''}">
+                    <p class="text-center p-3">
+                        <a href="${file} target="_blank">Переглянути файл ${type.toUpperCase()}</a>
+                    </p>
+                    `
+                }  
+            }
+                `).join('')}
             </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -60,7 +79,7 @@
     <span class="visually-hidden">Next</span>
   </button>
     </div>
-          <a class="stretched-link" href="/post-detail/${post.id}">qw</a>
+          <a href="/post-detail/${post.id}">qw</a>
             <p class="text-body">${ post.description }</p>
             <small class="text-body-secondary">${ post.date_publish }</small>
           </p>

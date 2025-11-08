@@ -1,18 +1,25 @@
 from rest_framework import serializers
-from main.models import GroupMessage, Post
+from main.models import GroupMessage, Post, MediaPost
 from django.shortcuts import get_object_or_404
+class MediaPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MediaPost
+        fields = ['media']
 
 class PostSerializer(serializers.ModelSerializer):
     profile_user_email = serializers.CharField(source = 'profile.user.email', read_only=True)
     profile_avatar = serializers.CharField(source = 'profile.avatar', read_only=True)
-#    media = 
+    media = MediaPostSerializer(many=True, read_only=True, source='media_posts')
     class Meta:
         model = Post
-        fields = ['parent','profile_user_email','profile_avatar','description','date_publish','id']#,'media'
+        fields = ['parent','profile_user_email','profile_avatar','description','date_publish','id','media']#,'media'
 
-def get_media(self):
-    post = Post.objects.get()
-    media = post.media_posts.all()
+# def get_media(self):
+#     post = Post.objects.get()
+#     media = post.media_posts.all()
+
+
+
 
 def parent_structurator(message_id):
     message_get = get_object_or_404(GroupMessage, id = message_id)
