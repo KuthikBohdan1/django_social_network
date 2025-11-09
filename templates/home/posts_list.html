@@ -42,11 +42,11 @@
         <div class="card-body text-center">
           <div class="row">
             <div class="col-2"><img src="${ post.profile_avatar }" class="avatar_post" alt=""></div>
-            <div class="col-4"><h6 class="card-title">${ post.profile_user_email }</h6></div>
-          </div>
-          <p class="card-text">
-
-          <div id="carousel-${post.id}" class="carousel slide">
+            <div class="col-4"><h6 class="card-title">${ post.profile_user_email }</h6>
+            </div>
+            <p class="text-body">${ post.description }</p>
+            <small class="text-body-secondary">${ post.date_publish }</small>
+            <div id="carousel-${post.id}" class="carousel slide">
             <div class="carousel-inner">
             ${post.media.map((mediaItem, index) => {
                 const file = mediaItem.media;
@@ -79,9 +79,11 @@
     <span class="visually-hidden">Next</span>
   </button>
     </div>
+          </div>
+          <p class="card-text">
+
           <a href="/post-detail/${post.id}">qw</a>
-            <p class="text-body">${ post.description }</p>
-            <small class="text-body-secondary">${ post.date_publish }</small>
+
           </p>
         </div>
                 `;
