@@ -22,7 +22,6 @@ class Group_id:
 group_id = Group_id()
 
 async def ajaxInversed(request):
-    print("2")
     return HttpResponse("s")
 
 def ajaxLoadData(request):

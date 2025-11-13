@@ -21,7 +21,8 @@ class Post(models.Model):
     like_fast = models.IntegerField(default= 0)
     # media = models.ForeignKey(MediaPost,on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.parent} / {self.description}"
+        # return f"{self.parent} / {self.description}"
+        return self.description
     
 class MediaPost(models.Model):
     media = models.FileField(upload_to="media_posts/")
