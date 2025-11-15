@@ -13,7 +13,7 @@ urlpatterns = [
     path('hom/', views.HomeListView.as_view(), name='hom/'),
     path('group/', views.GroupListView.as_view(), name="group"),
     path('ajax-inversed/',views.ajaxInversed, name="ajax-inversed"),
-    path('ajax-PostLike/<int:post_id>', views.ajaxPostLike, name="post-like"),
+    path('api/posts/<int:post_id>/toggle-like/', views.toggle_like, name='toggle_like'),
     path('load-data/', views.ajaxLoadData, name="load_data"),
     path('see-<id>/', views.SeeSroc, name="see"),
     ]

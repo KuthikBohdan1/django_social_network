@@ -13,3 +13,38 @@ function ajaxInversed(){
 
 
 
+async function toggleLike(postId) {
+    console.log(postId)
+    try {
+        const response = await fetch(`/api/posts/${postId}/toggle-like/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': `{{csrf_token}}`
+            }
+        });
+        
+        const data = await response.json();
+        
+        // Оновлюємо кількість лайків на сторінці
+        const likeBtn = document.querySelector(`[data-post-id="${postId}"]`);
+        const likesCount = likeBtn.querySelector('.likes-count');
+        likesCount.textContent = data.likes_count;
+        
+    } catch (error) {
+        console.error('Помилка при обробці лайку:', error);
+    }
+}
+
+
+//  Завантажуємо перші пости при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Додаємо обробник кліку для кнопок лайків 
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.like-btn')) {
+            const postId = e.target.closest('.like-btn').dataset.postId;
+            toggleLike(postId);
+        }
+    });
+});

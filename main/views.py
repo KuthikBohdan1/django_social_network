@@ -27,6 +27,35 @@ async def ajaxInversed(request):
 async def ajaxPostLike(request):
     pass
 
+@api_view(['POST'])
+def toggle_like(request, post_id):
+    """
+    API endpoint для додавання/видалення лайку
+    POST /api/posts/{post_id}/toggle-like/
+    """
+    # Отримуємо пост
+    print(post_id)
+    post = get_object_or_404(Post, id=post_id, is_published=True)
+    user = request.user
+
+    reaction_exist = PostReaction.objects.filter(post=post, user=user, reaction='like').exists()
+    if reaction_exist:
+        PostReaction.objects.filter(post=post, user=user, reaction='like').delete()
+        liked = False
+        post.like_fast -1 
+        post.save()
+    else:
+        PostReaction.objects.create(post=post, user=user, reaction='like')
+        liked = True
+        post.like_fast += 1
+        post.save()
+
+    return Response({
+        'liked': liked,
+        'likes_count': post.like_fast,
+    })
+
+
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")

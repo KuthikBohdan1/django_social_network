@@ -40,8 +40,9 @@
     </div>
 </div>
 
-<button class="like-button" id="button_like">
-    <span class="icon">👍</span> Like
+<button class="btn btn-primary like-btn" id="" data-post-id="{{post.id}}">
+  <i class="bi bi-hand-thumbs-up my-2"></i>
+<span class="likes-count">{{ post.like_fast }}</span>
 </button>
 
 <a href="{% url 'main:comment-post' post_id=post_id %}" class="btn btn-primary">кометарі поста</a> 
