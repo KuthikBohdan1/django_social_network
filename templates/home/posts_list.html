@@ -7,7 +7,6 @@
             
             <!-- Контейнер для постів -->
             <div id="posts-container" style="max-width: 500px;">
-                <!-- Сюди будуть додаватися пости через JavaScript -->
             </div>
             
             <div class="text-center mt-4">
@@ -21,25 +20,29 @@
 <script>
     let currentPage = 1;
 
-    /**
-     * Функція для завантаження і відображення постів
-     */
+    async function Like(postId){
+        console.log(postId)
+    }
+
     async function loadPosts() {
         try {
-            // Робимо запит до API на отримання постів
             const response = await fetch(`{{ api_url }}?page=${currentPage}`);
             const data = await response.json();
-            
-            // Отримуємо контейнер для постів
+
             const postsContainer = document.getElementById('posts-container');
-            
-            // Додаємо кожен пост на сторінку
+
             data.results.forEach(post => {
                 const postHtml = `
 
         <div class="card overflow-hidden" style="width: 600px; max-height: 650px;">
         <div class="card-body text-center">
           <div class="row">
+
+            <button class="btn btn-outline-danger btn-sm like-btn" data-post-id="${post.id}">
+            лайк
+            {% comment %} <i class="bi bi-heart"></i> <span class="likes-count">${post.likes_count || 0}</span> {% endcomment %}
+            </button>
+
             <div class="col-2"><img src="${ post.profile_avatar }" class="avatar_post" alt=""></div>
             <div class="col-4"><h6 class="card-title">${ post.profile_user_email }</h6>
             </div>
@@ -81,11 +84,11 @@
     <span class="visually-hidden">Next</span>
   </button>
     </div>
-          </div>
-          <p class="card-text">
+   
+<div class="pb-4">
 
-
-          </p>
+        </div>
+        </div>
         </div>
                 `;
                 postsContainer.innerHTML += postHtml;

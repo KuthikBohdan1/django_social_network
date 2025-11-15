@@ -40,15 +40,14 @@
                 console.log(data.result);
 
                 const result = JSON.parse(data.result);
-                const messages = result.messages;
-
                 const container = document.getElementById("message")
 
                 container.innerHTML = "";
+                console.log(result.group_id)
+                console.log(result.messages)
 
-                console.log(messages)
-                for (key in messages){
-                    const message = messages[key];
+                for (key in result.messages){
+                    const message = result.messages[key];
                     console.log(message.id);
 
                     let html = ``;
@@ -83,7 +82,6 @@ function renderMessages(messages) {
     let html = "" //це локальна змінна
     for (const key in messages) {  ////цикл
         const message = messages[key];
-
         html += `<div class="card">
         відповідь${message.id}
         user:${message.user}

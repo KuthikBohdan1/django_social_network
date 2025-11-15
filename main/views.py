@@ -24,13 +24,17 @@ group_id = Group_id()
 async def ajaxInversed(request):
     return HttpResponse("s")
 
+async def ajaxPostLike(request):
+    pass
+
 def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
     group_id.value = id
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
-    result = structurator(group_id=id)
+    type = Group.objects.get(id = id)
+    result = structurator(group_id=id, type=type.type)
     result_json = json.dumps(result, ensure_ascii=False, indent=4)
     print(f'зібраний чат {result_json}')
     return JsonResponse({

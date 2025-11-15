@@ -36,7 +36,7 @@ def parent_structurator(message_id):
         }
     return context
 
-def structurator(group_id):   
+def structurator(group_id, type):   
     parent_messages = GroupMessage.objects.filter(group__id = group_id, parent__isnull=True)
     messages = {
     }
@@ -49,6 +49,7 @@ def structurator(group_id):
         }
  
     context = {
+        "type":type,
         "group_id":group_id,
         "messages":messages,
     }

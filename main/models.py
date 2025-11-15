@@ -60,6 +60,11 @@ class CommentPost(models.Model):
         return f"{self.text} / {self.author}"
 
 class Group(models.Model):
+    GROUP_TYPE = (
+        ('forum','forum'),
+        ('chat','chat'),
+    )
+    type = models.CharField(max_length=10, choices=GROUP_TYPE)
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=256)
     description = models.TextField(default="no description group")
