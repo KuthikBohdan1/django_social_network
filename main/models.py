@@ -72,6 +72,11 @@ class Group(models.Model):
     def __str__(self):
         return f"{self.name}"
     
+    class Meta:
+        verbose_name = "група"
+        verbose_name_plural = "групи"
+        ordering = ['name']
+        
 class GroupUser(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_groups")### user.group.all всі групи користувача потім в пенелі з чатами тре буде використовувати
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_users")# на сторінці чату виуодить список користувачів в групі

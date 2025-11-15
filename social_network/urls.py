@@ -25,3 +25,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('accounts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = "social_network"
+admin.site.site_title = "адмінка сайту"
+admin.site.index_title = "ласкаво"
