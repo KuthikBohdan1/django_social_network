@@ -41,6 +41,7 @@
 </div>
 
 <button class="btn btn-primary like-btn" id="" data-post-id="{{post.id}}">
+  <meta name="csrf-token" content="{{ csrf_token }}">
   <i class="bi bi-hand-thumbs-up my-2"></i>
 <span class="likes-count">{{ post.like_fast }}</span>
 </button>

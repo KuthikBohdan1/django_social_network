@@ -35,14 +35,14 @@ def toggle_like(request, post_id):
     """
     # Отримуємо пост
     print(post_id)
-    post = get_object_or_404(Post, id=post_id, is_published=True)
-    user = request.user
-
+    post = get_object_or_404(Post, id=post_id)
+    user = get_object_or_404(CustomUser, email=request.user)
+    print(user)
     reaction_exist = PostReaction.objects.filter(post=post, user=user, reaction='like').exists()
     if reaction_exist:
         PostReaction.objects.filter(post=post, user=user, reaction='like').delete()
         liked = False
-        post.like_fast -1 
+        post.like_fast -= 1 
         post.save()
     else:
         PostReaction.objects.create(post=post, user=user, reaction='like')

@@ -16,11 +16,13 @@ function ajaxInversed(){
 async function toggleLike(postId) {
     console.log(postId)
     try {
+        const csrftoken = document.querySelector('meta[name="csrf-token"]').content;
+
         const response = await fetch(`/api/posts/${postId}/toggle-like/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': `{{csrf_token}}`
+                'X-CSRFToken': csrftoken
             }
         });
         
