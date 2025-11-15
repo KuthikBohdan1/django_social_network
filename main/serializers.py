@@ -14,12 +14,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['parent','profile_user_email','profile_avatar','description','date_publish','id','media']#,'media'
 
-# def get_media(self):
-#     post = Post.objects.get()
-#     media = post.media_posts.all()
-
-
-
 
 def parent_structurator(message_id):
     message_get = get_object_or_404(GroupMessage, id = message_id)
@@ -60,6 +54,16 @@ def structurator(group_id, type):
 
 class GroupMessageSerializer(serializers.ModelSerializer):
     user_email = serializers.CharField(source = 'user.email', read_only=True)
+   ##custom func
+    parent = serializers.SerializerMethodField()
     class Meta:
-        model = GroupMessage
-        fields = ['user_email','date','message','file']
+        model = GroupMessage 
+        fields = ['parent','id','user_email','date','message','file']
+
+    def get_parent(self, obj):
+        message = obj.parent
+        if message == None:
+            message = None
+        else:
+            message = obj.parent.message
+        return message

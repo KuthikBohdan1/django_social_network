@@ -6,7 +6,7 @@
    {% for group in groups %}
 <div class="card">
     <div class="card-body">
-<button class="btn-lg mt-4" onclick="showGroup({{ group.id }})">
+<button class="btn-lg mt-4" onclick="showGroup({{group.id}})">
     
 <p>name {{ group.name }}</p>
 </button>
@@ -34,7 +34,6 @@
     function showGroup(groupId) {
         fetch(`/load-data/?id=${groupId}`)
 
-
             .then(response => response.json())
             .then(data => {
                 console.log(data.result);
@@ -45,13 +44,12 @@
                 container.innerHTML = "";
                 console.log(result.group_id)
                 console.log(result.messages)
-
+                if (result.type == 'forum'){
                 for (key in result.messages){
                     const message = result.messages[key];
                     console.log(message.id);
 
                     let html = ``;
-
                         if (message.soons && Object.keys(message.soons).length > 0) {
                             console.log("Soons:", message.soons);
                             html = `<div class="card">
@@ -59,20 +57,41 @@
                             пост:${message.id}
                             <b>${message.obj}</b>
                             `;
-                            html += renderMessages(message.soons)
-                        }
-                        else {
+                            html += renderMessages(message.soons);
+                        } else {
                             console.log("синів нема:", message.soons);
                             html = `<div class="card">
                             user: ${message.user}
                             пост id${message.id}
                             <b>${message.obj}
-                            </b>
-                            `;
+                            </b> `;
                         }
+
                     html +=   `</div> <br>`
                     container.innerHTML += html;
                 }
+                }
+                
+                else if(result.type == "chat"){
+                    console.log("це чат")
+                    console.log(result.messages)
+                    let html = ''
+                    for(key in result.messages){
+                        const message = result.messages[key];
+                        html = `
+                        <div class="card">
+                            parent: ${message.parent}
+                            post:${message.id}
+                            <b>${message.message}</b>
+                            <b>${message.date}</b>
+                            </div> <br>
+                        `;
+                       container.innerHTML += html; 
+                    }
+                    
+                }                    
+
+                
             })
             .catch(error => console.error("Помилка:", error));
     }

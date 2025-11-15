@@ -14,7 +14,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
-from main.serializers import GroupMessageSerializer, structurator, PostSerializer
+from main.serializers import GroupMessageSerializer, structurator, PostSerializer, GroupMessageSerializer
 # Create your views here.
 class Group_id:
     def __init__(self):
@@ -60,12 +60,22 @@ def ajaxLoadData(request):
     print("виконується функція ajaxLoadGroupGessages")
     id = request.GET.get("id")
     group_id.value = id
+    group = get_object_or_404(Group, id = id)
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
-    type = Group.objects.get(id = id)
-    result = structurator(group_id=id, type=type.type)
+    if group.type == "forum":
+        type = Group.objects.get(id = id)
+        result = structurator(group_id=id, type=type.type)
+    elif group.type == "chat":
+        print(serializer.data)
+        result = {
+            "type": "chat",
+            "group_id": group.id,
+            "messages": serializer.data
+        }
     result_json = json.dumps(result, ensure_ascii=False, indent=4)
     print(f'зібраний чат {result_json}')
+
     return JsonResponse({
         "message": serializer.data,
         "result": result_json,
