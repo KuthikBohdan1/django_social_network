@@ -34,10 +34,9 @@ class CommentPostForm(forms.ModelForm):
 class GroupMessageForm(forms.ModelForm):
     class Meta:
         model = GroupMessage
-        fields = ['parent','message']
+        fields = ['message']
 
         widgets = {
-            'parent': TextInput,
             'group': TextInput,
             'message': TextInput,
         }
