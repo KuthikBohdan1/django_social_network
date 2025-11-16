@@ -55,6 +55,7 @@ def structurator(group_id, type):
 class GroupMessageSerializer(serializers.ModelSerializer):
     user_email = serializers.CharField(source = 'user.email', read_only=True)
    ##custom func
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", read_only=True)
     parent = serializers.SerializerMethodField()
     class Meta:
         model = GroupMessage 

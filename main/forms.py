@@ -37,6 +37,5 @@ class GroupMessageForm(forms.ModelForm):
         fields = ['message']
 
         widgets = {
-            'group': TextInput,
-            'message': TextInput,
+            'message': Textarea(attrs={'class': 'form-control', 'rows': 3} ),
         }
