@@ -230,8 +230,9 @@ class GroupListView(LoginRequiredMixin, ListView):
             form.instance.group = Group.objects.get(id = group_id.value)
             form.instance.user = CustomUser.objects.get(id = request.user.id)
             parent_id = request.POST.get("reply")
-            print(parent_id)
-            form.instance.parent = parent_id
+            print(f"parent_id {parent_id}")
+            if parent_id:
+                form.instance.parent = GroupMessage.objects.get(id=parent_id)
             form.save()
             return redirect("main:group")
         else:
