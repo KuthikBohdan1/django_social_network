@@ -217,12 +217,17 @@ class GroupListView(LoginRequiredMixin, ListView):
     model = Group
     template_name = "group/group_list.html"
     context_object_name = "groups"
-    
+      
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = GroupMessageForm()
+        query = self.request.GET.get('q', '')
+        if query:
+            groups = Group.objects.filter(name__icontains = query)
+            print(groups)
+            context["search_groups"] = groups
         return context
-    
+
     def post(self, request, *args, **kwargs):
         form = GroupMessageForm(request.POST)
         if form.is_valid():

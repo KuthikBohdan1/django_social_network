@@ -89,3 +89,8 @@ body {
     padding-top:100px ;
 }
 /*   */
+
+.reply-button{
+    width: 35px;
+    height: 35px;
+}
