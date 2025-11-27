@@ -56,9 +56,11 @@ def toggle_like(request, post_id):
     })
 
 
-def ajaxLoadData(request):
+def ajaxLoadData(request, id=None):
     print("виконується функція ajaxLoadGroupGessages")
-    id = request.GET.get("id")
+    if request.GET.get("id"):
+        id = request.GET.get("id")
+        print(id)
     group_id.value = id
     group = get_object_or_404(Group, id = id)
     messages = GroupMessage.objects.filter(group__id = id)
@@ -73,6 +75,7 @@ def ajaxLoadData(request):
             "group_id": group.id,
             "messages": serializer.data
         }
+    request.session["last_chat"] = id
     result_json = json.dumps(result, ensure_ascii=False, indent=4)
     print(f'зібраний чат {result_json}')
 
@@ -218,8 +221,15 @@ class GroupListView(LoginRequiredMixin, ListView):
     template_name = "group/group_list.html"
     context_object_name = "groups"
       
+    def dispatch(self, request, *args, **kwargs):
+        if request.session.get("last_chat"):
+            self.group_id = request.session.get("last_chat")
+        else:
+            print("hdvgsi-fwjobob pvld,")
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["last_group_id"] = self.group_id
         context["form"] = GroupMessageForm()
         query = self.request.GET.get('q', '')
         if query:

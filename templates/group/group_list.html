@@ -10,7 +10,7 @@
    {% for group in groups %}
 <div class="card">
     <div class="card-body">
-<button class="btn-lg mt-4" onclick="showGroup({{group.id}})">
+<button class="nav-link active btn btn-lg mt-4" onclick="showGroup({{group.id}})" style="height: 15px;">
     
 <p>name {{ group.name }}</p>
 </button>
@@ -40,6 +40,13 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const lastGroupId = "{{ last_group_id|default:'' }}";
+        if (lastGroupId) {
+            showGroup(lastGroupId);
+        }
+    });
+
     function showGroup(groupId) {
         fetch(`/load-data/?id=${groupId}`)
 
@@ -92,6 +99,7 @@
                         const message = result.messages[key];
                         html = `
                         <div class="card">
+                            <img src="${message.avatar}" class="avatar_comment" alt="">
                             parent: ${message.parent}
                             post:${message.id}
                             <b>${message.message}</b>

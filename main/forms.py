@@ -17,14 +17,14 @@ class PostForm(forms.ModelForm):
     # media = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)
     class Meta:
         model = Post
-        fields = ['parent','description']
+        fields = ['description']
         widgets = {
         }
 
 class CommentPostForm(forms.ModelForm):
     class Meta:
         model = CommentPost
-        fields = ['parent', 'text', 'media']
+        fields = ['text', 'media']
         
         widgets = {
             'text': TextInput,
