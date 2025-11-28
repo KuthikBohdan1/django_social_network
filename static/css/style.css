@@ -76,13 +76,22 @@ body {
 }
 
 .container-scrool{
+    display: flex;
+    flex-direction: column-reverse;
     overflow-y: scroll;
-    height:400px ;
+    height: 400px;
 }
 
 .comment-media{
     max-width:300px ;
     max-height:300px;
+}
+
+.message_input{
+    display: flex;
+    justify-content: flex-end; /* кнопка вправо */
+    align-items: center;
+    padding: 5px; /* щоб виглядало акуратно */
 }
 
 /* .form-add-comment {
