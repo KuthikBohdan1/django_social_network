@@ -12,6 +12,10 @@ class ProfileForm(forms.ModelForm):
             'biography': TextInput(),
 
         }
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            for field in self.fields:
+                self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
 
 class PostForm(forms.ModelForm):
     # media = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}),required=False)
@@ -20,7 +24,10 @@ class PostForm(forms.ModelForm):
         fields = ['description']
         widgets = {
         }
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
 class CommentPostForm(forms.ModelForm):
     class Meta:
         model = CommentPost
@@ -30,7 +37,10 @@ class CommentPostForm(forms.ModelForm):
             'text': TextInput,
             'media': ClearableFileInput,
         }
-
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
 class GroupMessageForm(forms.ModelForm):
     class Meta:
         model = GroupMessage
@@ -39,3 +49,7 @@ class GroupMessageForm(forms.ModelForm):
         widgets = {
             'message': Textarea(attrs={'class': 'form-control', 'rows': 3} ),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })

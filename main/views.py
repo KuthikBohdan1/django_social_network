@@ -220,22 +220,19 @@ class GroupListView(LoginRequiredMixin, ListView):
     model = Group
     template_name = "group/group_list.html"
     context_object_name = "groups"
-      
-    def dispatch(self, request, *args, **kwargs):
-        if request.session.get("last_chat"):
-            self.group_id = request.session.get("last_chat")
-        else:
-            print("hdvgsi-fwjobob pvld,")
-        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["last_group_id"] = self.group_id
+        last_group_id = self.request.GET.get("last_chat")
+        if last_group_id:
+            context["last_group_id"] = last_group_id
+
         context["form"] = GroupMessageForm()
         query = self.request.GET.get('q', '')
         if query:
             groups = Group.objects.filter(name__icontains = query)
             print(groups)
-            context["search_groups"] = groups
+            context["groups"] = groups
         return context
 
     def post(self, request, *args, **kwargs):
