@@ -113,6 +113,17 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
         valid = super().form_valid(form)
         return valid
 
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    template_name = "profiles/profile_update.html"
+    form_class = ProfileForm
+    success_url = reverse_lazy("main:profile-list")
+
+    def get_object(self, queryset=None):
+        user = self.request.user
+        print(f"user{user}")
+        return get_object_or_404(Profile, user__email = user)
+    
 class ProfileListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = "profiles/profile_list.html"

@@ -7,7 +7,6 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="profile")
     biography = models.TextField(null=True, blank=True, default="no bio yet")
     avatar = models.ImageField(upload_to="profiles/avatars/", null=True, blank=True)
-    cover = models.ImageField(upload_to="profiles/covers/", null=True, blank=True)
     def __str__(self):
         return self.user.username
     

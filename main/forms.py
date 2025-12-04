@@ -7,10 +7,10 @@ from main.models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['biography','avatar']###'cover'
+        fields = ['biography','avatar']
         widgets = {
             'biography': TextInput(),
-
+            
         }
     def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)

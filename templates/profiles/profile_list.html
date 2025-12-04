@@ -11,6 +11,9 @@
 {% else %}
 <img src="{% static 'img/no-avatar.jpg' %}" alt="">
 {% endif %} {% endcomment %}
+{% if profiles %}
+  
+
 
 {% for profile in profiles %}
 <div class="profile-header d-flex align-items-center mb-4">
@@ -30,6 +33,7 @@
       <span><strong></strong> підписки</span>
     </div>
   </div>
+  <a class="btn btn-primary" href="{% url 'main:profile-update' %}"></a>
 </div>
 
 <div class="profile-post-container">
@@ -51,4 +55,9 @@
   </div>
 </div>
 {% endfor %}
+
+{% else %}
+<h1>у вас немає профілю </h1>
+<a class="btn btn-primary" href="{% url 'main:profile-create' %}">додати дані профілю</a>
+{% endif %}
 {% endblock %}

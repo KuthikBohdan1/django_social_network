@@ -5,6 +5,7 @@ urlpatterns = [
     # Визнач тут свої URL-шляхи
     path('profile-create/', views.ProfileCreateView.as_view(), name='profile-create'),
     path('profile-list/', views.ProfileListView.as_view(), name="profile-list"),
+    path('profile-update/', views.ProfileUpdateView.as_view(), name="profile-update"),
     path('post-create/', views.PostCreateView.as_view(), name="post-create"),
     path('post-detail/<int:pk>', views.PostDetailView.as_view(), name="post-detail"),
     path('comment-post<int:post_id>', views.CommentPostCreateView.as_view(), name = "comments-post"),
