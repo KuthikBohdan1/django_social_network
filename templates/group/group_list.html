@@ -10,15 +10,13 @@
     </form>
     <h4>групи</h4>
    {% for group in groups %}
-<div class="card">
-    <div class="card-body">
-<button class="nav-link active btn btn-lg mt-4" onclick="showGroup({{group.id}})" style="height: 15px;">
+<div class="card" onclick="showGroup({{group.id}})">
+<div class="card-body">    
 {% if group.image_group %}
-<img src="{{ group.image_group.url }}" alt="" class="avatar_comment" >
+<img src="{{ group.image_group.url }}" alt="" class="avatar-group" >
 {% else %}
 {% endif %}
 <p>{{ group.name }}</p>
-</button>
 </div>
 </div>
 {% endfor %}
@@ -103,6 +101,11 @@
                     console.log("це чат")
                     console.log(result.messages)
                     let html = ''
+                    let top_group_html = `
+                   <img src="${result.avatar}" alt="">
+                   <p>назва ${result.name}</p>
+                    `
+                    document.getElementById("container-top").innerHTML = top_group_html;
                     for(key in result.messages){
                         const message = result.messages[key];
                         html = `
@@ -155,6 +158,8 @@ function renderMessages(messages) {
 return html;
 }
 </script>
+
+
 
 {% endblock content %}
 

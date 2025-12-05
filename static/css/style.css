@@ -133,3 +133,8 @@ body {
     height: 35px;
 }
 
+.avatar-group{
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+}

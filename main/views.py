@@ -65,6 +65,10 @@ def ajaxLoadData(request, id=None):
     group = get_object_or_404(Group, id = id)
     messages = GroupMessage.objects.filter(group__id = id)
     serializer = GroupMessageSerializer(messages, many=True)
+    if group.image_group:
+        avatar = group.image_group.url
+    else:
+        avatar = None
     if group.type == "forum":
         type = Group.objects.get(id = id)
         result = structurator(group_id=id, type=type.type)
@@ -73,7 +77,9 @@ def ajaxLoadData(request, id=None):
         result = {
             "type": "chat",
             "group_id": group.id,
-            "messages": serializer.data
+            "name": group.name,
+            "avatar":avatar,
+            "messages": serializer.data,
         }
     request.session["last_chat"] = id
     result_json = json.dumps(result, ensure_ascii=False, indent=4)
