@@ -2,6 +2,8 @@
 {% block content %}
 <div class="row">
 <div class="col-2 chat-bar" >
+
+    <a class="btn btn-primary" href="{% url 'main:group_create' %}"> + </a>
     <form method="get" action="">
         <input type="text" name="q">
         <button type="submit">знайти</button>
@@ -11,7 +13,10 @@
 <div class="card">
     <div class="card-body">
 <button class="nav-link active btn btn-lg mt-4" onclick="showGroup({{group.id}})" style="height: 15px;">
-    
+{% if group.image_group %}
+<img src="{{ group.image_group.url }}" alt="" class="avatar_comment" >
+{% else %}
+{% endif %}
 <p>{{ group.name }}</p>
 </button>
 </div>

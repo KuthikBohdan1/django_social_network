@@ -53,3 +53,13 @@ class GroupMessageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['type','name','description','image_group']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
