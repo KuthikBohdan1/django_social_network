@@ -63,3 +63,8 @@ class GroupForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control mb-2', })
+
+class GroupUserForm(forms.ModelForm):
+    class Meta:
+        model = GroupUser
+        fields = ['user']

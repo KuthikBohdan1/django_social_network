@@ -4,7 +4,7 @@ from .models import Post, MediaPost, CommentPost, PostReaction, Group, GroupMess
 from main.models import CustomUser
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from main.forms import ProfileForm, PostForm, CommentPostForm, GroupMessageForm, GroupForm
+from main.forms import ProfileForm, PostForm, CommentPostForm, GroupMessageForm, GroupForm, GroupUserForm
 from django.http import HttpResponse
 from time import sleep
 from django.core.paginator import Paginator
@@ -268,7 +268,8 @@ class GroupListView(LoginRequiredMixin, ListView):
             return redirect("main:group")        
 
     def get_queryset(self):
-        return super().get_queryset()
+        queryset = GroupUser.objects.filter(user = self.request.user).values_list("group__id", flat=True)
+        return Group.objects.filter(id__in = queryset)
 
 class GroupCreateView(LoginRequiredMixin, CreateView):
     model = Group
@@ -278,4 +279,12 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
+        obj = form.save(commit=True)
+        print(f"obj{obj.id}")
+        GroupUser.objects.create(user = self.request.user, group = obj)
         return super().form_valid(form)
+
+class GroupUserCrete(LoginRequiredMixin, CreateView):
+    model = GroupUser
+    template_name  = "group_user/create_group_user.html"
+    form_class = GroupUserForm

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h4>дати користувача до кгрупи </h4>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">add</button>
+    <input type="hidden" name="group_id" va>
+</form>
+
+{% endblock content %}

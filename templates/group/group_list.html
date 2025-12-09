@@ -20,6 +20,7 @@
 </div>
 </div>
 {% endfor %}
+
 </div>
 
 <div class="col-10 " >
@@ -104,6 +105,7 @@
                     let top_group_html = `
                    <img src="${result.avatar}" alt="">
                    <p>назва ${result.name}</p>
+                      <a href="/group-user-create/${result.group_id}/">додати учасника групи</a>
                     `
                     document.getElementById("container-top").innerHTML = top_group_html;
                     for(key in result.messages){
@@ -158,8 +160,6 @@ function renderMessages(messages) {
 return html;
 }
 </script>
-
-
 
 {% endblock content %}
 
