@@ -144,7 +144,14 @@ function addReply(message_id) {
 
 function joinBtn(group_id) {
     console.log("sdsd", group_id);
-    fetch
+    fetch(`/user-join/${group_id}/`)
+    .then(response => response.json())
+    .then(data =>{
+        if (data.created == false){
+            alert("ти вже є в групі")
+        }
+        console.log("data;", data);
+    });
 }
 ///////////  то шось наподобі parent_structurator(
 function renderMessages(messages) {

@@ -90,9 +90,15 @@ def ajaxLoadData(request, id=None):
         "result": result_json,
     })
 
-def ajaxJoinGroup(group_id):
-    print(group_id)
-    return True
+def ajaxJoinGroup(request, group_id):
+    print("group; ", group_id)
+    group_obj = get_object_or_404(Group, id = group_id)
+    obj, created = GroupUser.objects.get_or_create(user=request.user, group = group_obj)
+    return JsonResponse({
+        "created": created        
+    })
+
+        
 
 def SeeSroc(request, **kwargs):
     result = structurator(group_id=kwargs.get("id"))
