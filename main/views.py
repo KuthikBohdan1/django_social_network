@@ -263,6 +263,7 @@ class GroupListView(LoginRequiredMixin, ListView):
 
     def post(self, request, *args, **kwargs):
         form = GroupMessageForm(request.POST)
+        base_url = reverse("main:group")
         if form.is_valid():
             print(group_id.value)
             form.instance.group = Group.objects.get(id = group_id.value)
@@ -272,7 +273,7 @@ class GroupListView(LoginRequiredMixin, ListView):
             if parent_id:
                 form.instance.parent = GroupMessage.objects.get(id=parent_id)
             form.save()
-            return redirect("main:group")
+            return redirect(f"{base_url}?last_chat={group_id.value}")
         else:
             return redirect("main:group")        
 
