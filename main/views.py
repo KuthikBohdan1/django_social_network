@@ -90,6 +90,9 @@ def ajaxLoadData(request, id=None):
         "result": result_json,
     })
 
+def ajaxJoinGroup(group_id):
+    print(group_id)
+    return True
 
 def SeeSroc(request, **kwargs):
     result = structurator(group_id=kwargs.get("id"))
@@ -284,7 +287,16 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
         GroupUser.objects.create(user = self.request.user, group = obj)
         return super().form_valid(form)
 
-class GroupUserCrete(LoginRequiredMixin, CreateView):
+class GroupUserCreteView(LoginRequiredMixin, CreateView):
     model = GroupUser
     template_name  = "group_user/create_group_user.html"
     form_class = GroupUserForm
+    
+    def form_valid(self, form):
+        form_obj = get_object_or_404(Group, id = self.kwargs.get("group_id"))
+        print(f"form obj {form_obj}")
+        form.instance.group = form_obj
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy("main:group")
