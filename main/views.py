@@ -194,7 +194,7 @@ class CommentPostCreateView(LoginRequiredMixin, CreateView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = "posts/post_create.html"
+    template_name = "post/post_create.html"
     success_url = reverse_lazy("main:post-create")
 
     def get_context_data(self, **kwargs):
