@@ -182,7 +182,7 @@ class CommentPostCreateView(LoginRequiredMixin, CreateView):
         return context
     
     def get_success_url(self, **kwargs):
-        return reverse_lazy("main:comments-post", kwargs = {'post_id': self.kwargs.get("post_id")})
+        return reverse_lazy("main:comment-post", kwargs = {'post_id': self.kwargs.get("post_id")})
 
     def form_valid(self, form, **kwargs):
         print(self.request.user)

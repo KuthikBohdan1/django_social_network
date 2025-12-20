@@ -62,17 +62,6 @@ MIDDLEWARE = [
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "django.core.files.storage.FileSystemStorage",
-#         "OPTIONS": {
-#             "location": BASE_DIR / "media",  # тут будуть твої медіафайли
-#         },
-#     },
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-#     },
-# }
 
 STORAGES = {
     'default': {
