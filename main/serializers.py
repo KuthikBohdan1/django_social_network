@@ -8,7 +8,7 @@ class MediaPostSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     profile_user_email = serializers.CharField(source = 'profile.user.email', read_only=True)
-    profile_avatar = serializers.CharField(source = 'profile.avatar', read_only=True)
+    profile_avatar = serializers.ImageField(source = 'profile.avatar', read_only=True)
     media = MediaPostSerializer(many=True, read_only=True, source='media_posts')
     class Meta:
         model = Post
